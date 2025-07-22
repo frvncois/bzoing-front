@@ -1,21 +1,7 @@
 import axios from 'axios';
 
-const API_TOKEN = import.meta.env?.VITE_API_TOKEN || '';
+const API_TOKEN = import.meta.env?.VITE_API_TOKEN || '844d3b56203bd40cac3fdc321979e4f170eeb099316d40904655d59096f2f3614b0dd3386c1c5e9851a08a843092c03c5538557ec34c1075cb8ff0a7702e78fff2d4eba30ff423afdf1892c5d3331ffa1464883e433b0be29bf5697eaef640fdfff862ffd20b7f770a81792234dfe57348f854823fe4291ef30b35cb0de980e3';
 const API_URL = import.meta.env?.VITE_API_URL || 'https://active-horse-14e6153647.strapiapp.com/api';
-
-// Debug logging (remove in production)
-console.log('VITE_API_URL:', import.meta.env?.VITE_API_URL);
-console.log('API_URL used by Axios:', API_URL);
-console.log('API_TOKEN present:', !!API_TOKEN);
-
-// Validate required environment variables
-if (!API_TOKEN) {
-  console.error('Missing VITE_API_TOKEN in environment variables');
-}
-
-if (!import.meta.env?.VITE_API_URL) {
-  console.warn('Using default Strapi Cloud API URL - make sure VITE_API_URL is set in your .env file');
-}
 
 const api = axios.create({
   baseURL: API_URL,
@@ -25,54 +11,22 @@ const api = axios.create({
   }
 });
 
-// Add request interceptor for debugging
-api.interceptors.request.use(
-  (config) => {
-    console.log(`Making ${config.method?.toUpperCase()} request to: ${config.baseURL}${config.url}`);
-    return config;
-  },
-  (error) => {
-    console.error('Request interceptor error:', error);
-    return Promise.reject(error);
-  }
-);
-
-// Add response interceptor for better error handling
+// Add response interceptor for error handling
 api.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
     if (error.response) {
-      // Server responded with error status
-      console.error('API Error Response:', {
+      console.error('API Error:', {
         status: error.response.status,
         statusText: error.response.statusText,
-        data: error.response.data,
         url: error.config.url
       });
-      
-      // Handle specific error cases
-      switch (error.response.status) {
-        case 401:
-          console.error('Authentication failed - check your API token');
-          break;
-        case 403:
-          console.error('Access forbidden - check your API permissions');
-          break;
-        case 404:
-          console.error('Resource not found');
-          break;
-        case 500:
-          console.error('Server error - check Strapi backend');
-          break;
-      }
     } else if (error.request) {
-      // Network error
       console.error('Network Error:', error.message);
-      console.error('Check if Strapi server is running and URL is correct');
     } else {
-      console.error('Request setup error:', error.message);
+      console.error('Request Error:', error.message);
     }
     
     return Promise.reject(error);
@@ -124,14 +78,12 @@ export default {
     }
   },
 
-  // Test connection method
   async testConnection() {
     try {
       const response = await api.get('/');
-      console.log('✅ Successfully connected to Strapi:', response.data);
       return true;
     } catch (error) {
-      console.error('❌ Failed to connect to Strapi:', error);
+      console.error('Connection test failed:', error);
       return false;
     }
   }

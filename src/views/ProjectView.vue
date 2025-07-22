@@ -4,19 +4,19 @@
       <div class="is-header">
         <h1>{{ currentProject.projectTitle }}</h1>
         <span>
-            <h1>{{ currentProject.projectCategory }}</h1>
-            <h1>{{ currentProject.projectYear }}</h1>
+          <h1>{{ currentProject.projectCategory }}</h1>
+          <h1>{{ currentProject.projectYear }}</h1>
         </span>
       </div>
       
       <ul :class="currentProject.projectLayout">
         <li v-if="currentProject.projectCover">
-          <img :src="getBaseUrl() + currentProject.projectCover.url" :alt="currentProject.projectTitle">
+          <img :src="currentProject.projectCover.url" :alt="currentProject.projectTitle">
         </li>
         <li v-for="(mediaItem, index) in galleryMedia" :key="index">
           <img
             v-if="isImage(mediaItem.mime)"
-            :src="getBaseUrl() + mediaItem.url"
+            :src="mediaItem.url"
             :alt="mediaItem.name || `Gallery item ${index + 1}`"
           />
           <video
@@ -24,7 +24,7 @@
             muted
             autoplay
             loop
-            :src="getBaseUrl() + mediaItem.url"
+            :src="mediaItem.url"
             :alt="mediaItem.name || `Gallery item ${index + 1}`"
           ></video>
           <p v-else>Unsupported media: {{ mediaItem.name }}</p>
@@ -33,11 +33,11 @@
       
       <div class="is-details">
         <span>
-            <h2>{{ currentProject.projectTitle }}</h2>
-            <span>
-                <h2>{{ currentProject.projectCategory }}</h2>
-                <h2>{{ currentProject.projectYear }}</h2>
-            </span>
+          <h2>{{ currentProject.projectTitle }}</h2>
+          <span>
+            <h2>{{ currentProject.projectCategory }}</h2>
+            <h2>{{ currentProject.projectYear }}</h2>
+          </span>
         </span>
         <p>{{ currentProject.projectDetails }}</p>
       </div>
@@ -54,20 +54,21 @@
 </template>
   
 <script setup>
-import { ref, onMounted, inject, computed, watch } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from '@/store';
 
 const route = useRoute();
 const router = useRouter();
-const projects = inject('projects');
+const store = useStore();
 const galleryMedia = ref([]);
 
 // Find the current project based on the route parameter
 const currentProject = computed(() => {
-  if (!projects.value) return null;
+  if (!store.state.projects || store.state.projects.length === 0) return null;
   
   const titleParam = route.params.title;
-  return projects.value.find(project => {
+  return store.state.projects.find(project => {
     const normalizedTitle = project.projectTitle
       .toLowerCase()
       .replace(/\s+/g, '-')
@@ -80,20 +81,10 @@ function fetchGalleryItems() {
   galleryMedia.value = [];
   
   if (currentProject.value?.projectGallery) {
-    // Make sure we're getting the correct gallery items
-    console.log('Project gallery:', currentProject.value.projectGallery);
-    
     galleryMedia.value = currentProject.value.projectGallery.map(item => {
-      // Handle possible different data structures
       return item.galleryItem || item;
     });
-
-    console.log('Gallery media:', galleryMedia.value);
   }
-}
-
-function getBaseUrl() {
-  return 'http://localhost:1337'; // Simplified to ensure correct URL
 }
 
 function isImage(mime) {
@@ -109,15 +100,12 @@ function goHome() {
 }
 
 function goToNextProject() {
-  // Find the index of the current project
-  const currentIndex = projects.value.findIndex(p => p.id === currentProject.value.id);
+  const currentIndex = store.state.projects.findIndex(p => p.id === currentProject.value.id);
   
-  if (currentIndex !== -1 && projects.value.length > 1) {
-    // Get the next project (with wrap-around)
-    const nextIndex = (currentIndex + 1) % projects.value.length;
-    const nextProject = projects.value[nextIndex];
+  if (currentIndex !== -1 && store.state.projects.length > 1) {
+    const nextIndex = (currentIndex + 1) % store.state.projects.length;
+    const nextProject = store.state.projects[nextIndex];
     
-    // Navigate to the next project
     const nextTitleSlug = nextProject.projectTitle
       .toLowerCase()
       .replace(/\s+/g, '-')
