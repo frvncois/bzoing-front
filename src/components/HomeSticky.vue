@@ -15,7 +15,7 @@ div {
     top: 0;
     left: var(--space-xsmall);
     right: var(--space-xsmall);
-    gap: 0;
+    gap: var(--space-xsmall);
     z-index: 0;
     pointer-events: none;
 }

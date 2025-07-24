@@ -28,7 +28,6 @@ api.interceptors.response.use(
     } else {
       console.error('Request Error:', error.message);
     }
-    
     return Promise.reject(error);
   }
 );
@@ -36,9 +35,7 @@ api.interceptors.response.use(
 export default {
   async getProjects() {
     try {
-      const response = await api.get(
-        '/projects?populate[projectGallery][populate]=galleryItem&populate=projectCover'
-      );
+      const response = await api.get('/projects?populate=*');
       return response.data;
     } catch (error) {
       console.error('Error fetching projects:', error);
@@ -49,7 +46,7 @@ export default {
   async getProject(id) {
     try {
       const response = await api.get(
-        `/projects/${id}?populate[projectGallery][populate]=galleryItem&populate=projectCover`
+        `/projects/${id}?populate[projectGallery][populate]=galleryItem&populate=projectCover&populate=projectThumbnail`
       );
       return response.data;
     } catch (error) {

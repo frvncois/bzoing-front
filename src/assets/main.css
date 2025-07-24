@@ -67,6 +67,7 @@ header {
   top: var(--space-xsmall);
   left: var(--space-xsmall);
   right: var(--space-xsmall);
+  gap: var(--space-xsmall);
   z-index: 2;
   > h1 {
     flex: 1;
@@ -99,8 +100,12 @@ header {
     }
   }
 }
+button {
+  color: currentColor;
+}
 
 footer {
+  text-transform: uppercase;
   ul {
     display: flex;
     justify-content: space-between;
@@ -150,6 +155,8 @@ ul {
   flex-direction: row;
   justify-content: space-between;
   gap: var(--space-normal);
+  position: sticky;
+  top: var(--space-normal);
   > h2 {
       flex: 0.5;
       font-size: var(--font-small);
@@ -163,6 +170,7 @@ ul {
   }
   > li {
     flex: 0.25;
+    padding-left: var(--space-xsmall);
   }
 }
 
@@ -330,20 +338,12 @@ ul {
 }
 
 [single] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  padding: var(--space-xsmall);
-  background-color: var(--is-white);
   display: flex;
   flex-direction: column;
   gap: var(--space-xsmall);
   > .is-header {
     position: relative;
     display: flex;
-    gap: var(--space-xsmall);
     font-size: var(--font-medium);
     margin-bottom: var(--space-large);
     & h1 {
@@ -543,6 +543,18 @@ ul {
   }
 }
 
+[recreation] {
+  display: flex;
+  transform: translateY(25%);
+  > li {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-large);
+  }
+}
+
+
 [pause] {
   display: flex;
   flex-direction: row;
@@ -615,6 +627,11 @@ ul {
         }
     }
   }
+  [home] {
+    > li {
+      padding-left: unset;
+    }
+  }
   [about] {
     gap: var(--space-xsmall);
     & ul {
@@ -629,8 +646,14 @@ ul {
   }
   [projects] {
   font-size: var(--font-normal);
-    > li div {
-      display: none;
+  margin-top: 50vh;
+    > li {
+      > div {
+        display: none;
+      }
+      & img {
+        display: none;
+      }
     }
   }
   [services] {
@@ -686,4 +709,20 @@ ul {
     margin-top: var(--space-normal);
     gap: var(--space-normal);
   }
+  [pause] {
+    display: flex;
+    flex-direction: column;
+  }
+  [recreation] {
+    display: flex;
+      flex-direction: column;
+    transform: translateY(0%);
+    > li {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-large);
+    }
+  }
+
 }

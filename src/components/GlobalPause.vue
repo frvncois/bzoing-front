@@ -54,7 +54,7 @@ const allImageKeys = Object.keys(opacities.value);
 let inactivityTimer = null;
 let revealInterval = null;
 
-// Track mouse activity
+// Track mouse and scroll activity
 const resetInactivityTimer = () => {
     clearTimeout(inactivityTimer);
     clearInterval(revealInterval);
@@ -99,15 +99,17 @@ const startRevealingImages = () => {
     }, intervalTime);
 };
 
-// Set up mouse movement listener
+// Set up mouse movement and scroll listeners
 onMounted(() => {
     window.addEventListener('mousemove', resetInactivityTimer);
+    window.addEventListener('scroll', resetInactivityTimer);
     resetInactivityTimer(); // Start the initial timer
 });
 
 // Clean up listeners when component unmounts
 onUnmounted(() => {
     window.removeEventListener('mousemove', resetInactivityTimer);
+    window.removeEventListener('scroll', resetInactivityTimer);
     clearTimeout(inactivityTimer);
     clearInterval(revealInterval);
 });

@@ -12,7 +12,6 @@ onMounted(async () => {
   await store.fetchAllData();
   dataLoaded.value = true;
   
-  // Resize Lenis after data loads and DOM updates
   await nextTick();
   if (window.lenisResize) {
     window.lenisResize();

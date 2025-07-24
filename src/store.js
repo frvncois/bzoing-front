@@ -24,14 +24,14 @@ const actions = {
         api.getAll('home'),
         api.getAll('info')
       ]);
-      
+
       // Handle projects
       if (projectsResult.status === 'fulfilled') {
         state.projects = projectsResult.value.data || projectsResult.value;
       } else {
         console.error('Projects failed:', projectsResult.reason);
       }
-      
+
       // Handle archive
       if (archiveResult.status === 'fulfilled') {
         state.archiveData = archiveResult.value.data || archiveResult.value;
@@ -39,14 +39,14 @@ const actions = {
         console.warn('Archive failed:', archiveResult.reason);
         state.archiveData = {};
       }
-      
+
       // Handle home
       if (homeResult.status === 'fulfilled') {
         state.homeData = homeResult.value.data || homeResult.value;
       } else {
         console.error('Home failed:', homeResult.reason);
       }
-      
+
       // Handle info
       if (infoResult.status === 'fulfilled') {
         state.infoData = infoResult.value.data || infoResult.value;
@@ -54,7 +54,7 @@ const actions = {
         console.warn('Info failed:', infoResult.reason);
         state.infoData = {};
       }
-      
+
     } catch (error) {
       console.error('Store error:', error);
       state.error = error.message || 'Failed to load data';

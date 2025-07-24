@@ -60,9 +60,6 @@
       </span>
     </li>
     <li>
-      <span>
-        <h2>Nous joindre</h2>
-      </span>
     </li>
   </ul>
 </template>

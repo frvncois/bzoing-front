@@ -11,8 +11,8 @@
         <span>'{{ project.projectYear }}</span>
       </div>
       <img
-        v-if="activeProject && activeProject.id === project.id && project.projectCover"
-        :src="getBaseUrl() + project.projectCover.url"
+        v-if="activeProject && activeProject.id === project.id && project.projectThumbnail && project.projectThumbnail.url"
+        :src="project.projectThumbnail.url"
         :alt="project.projectTitle"
       />
     </li>
@@ -30,6 +30,7 @@ const activeProject = ref(null);
 
 function setActiveProject(project) {
   activeProject.value = project;
+  console.log('Project thumbnail data:', project.projectThumbnail);
 }
 
 function clearActiveProject() {
@@ -41,14 +42,10 @@ function navigateToProject(project) {
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '');
-    
+  
   router.push({
     name: 'Project',
     params: { title: titleSlug }
   });
-}
-
-function getBaseUrl() {
-  return 'https://active-horse-14e6153647.strapiapp.com';
 }
 </script>
