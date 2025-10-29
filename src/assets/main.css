@@ -6,11 +6,12 @@
   --font-large: 10em;
   --font-xlarge: 36em;
 
-  --space-xlarge: 36em;
+  --space-xlarge: 8em;
   --space-large: 4em;
   --space-normal: 2em;
   --space-small: 1em;
   --space-xsmall: 0.5em;
+  --space-xxsmall: 0.25rem;
 
   --is-yellow: #fff318ed;
   --is-grey: #6E746D;
@@ -38,6 +39,7 @@ button {
   padding: 0;
   line-height: 0.75;
   cursor: pointer;
+  font-family: 'body';
 }
 
 p {
@@ -56,6 +58,7 @@ body {
   font-size: clamp(1vw, 1em, 14px);
   margin-top: var(--space-normal);
   line-height: 1;
+  color: black;
 }
 
 header {
@@ -100,6 +103,7 @@ header {
     }
   }
 }
+
 button {
   color: currentColor;
 }
@@ -148,6 +152,10 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+video {
+  width: 100%;
 }
 
 [home] {
@@ -205,12 +213,6 @@ ul {
       justify-content: space-between;
     }
   }
-  &:hover > li {
-    opacity: 0.25;
-  }
-  > li:hover {
-    opacity: 1;
-  }
 }
 
 [masonery] {
@@ -243,42 +245,25 @@ ul {
 
 [services] {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   gap: var(--space-large);
-  margin-bottom: var(--space-xlarge);
+  margin-bottom: var(--space-large);
   > li {
     position: relative;
-    &:nth-of-type(odd) {
-      text-align: left;
-      display: flex;
-      justify-content: flex-start;
-    }
-    &:nth-of-type(even) {
-      text-align: right;
-      display: flex;
-      justify-content: flex-end;
-    }
-    > h2 {
+    > h1 {
       font-size: var(--font-large);
       max-width: 10ch;
     }
-    > div {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9;
-      pointer-events: none;
-      > span {
-        rotate: -90deg;
-        color: var(--is-yellow);
-        font-size: var(--font-xlarge);
-      }
+    > h2 {
+      font-size: var(--font-medium);
+      margin-bottom: 0.125em;
+    }
+    & h3 {
+      text-transform: uppercase;
+    }
+    & h4 {
+      text-transform: uppercase;
+      margin-top: var(--space-normal);
     }
   }
 }
@@ -545,15 +530,7 @@ ul {
 
 [recreation] {
   display: flex;
-  transform: translateY(25%);
-  > li {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-large);
-  }
 }
-
 
 [pause] {
   display: flex;
@@ -575,7 +552,6 @@ ul {
     flex-direction: column;
   }
 } 
-
 
 /* RESPONSIVE */
 @media only screen and (max-width: 767px) {

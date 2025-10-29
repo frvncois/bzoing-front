@@ -38,7 +38,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 
-// Create an object to track opacity of each image
 const opacities = ref({
     '1-a': 0, '1-b': 0, '1-c': 0,
     '2-a': 0, '2-b': 0, '2-c': 0, '2-d': 0,
@@ -48,13 +47,11 @@ const opacities = ref({
     '6-a': 0, '6-b': 0, '6-c': 0
 });
 
-// Create array of all image keys for randomization
 const allImageKeys = Object.keys(opacities.value);
 
 let inactivityTimer = null;
 let revealInterval = null;
 
-// Track mouse and scroll activity
 const resetInactivityTimer = () => {
     clearTimeout(inactivityTimer);
     clearInterval(revealInterval);

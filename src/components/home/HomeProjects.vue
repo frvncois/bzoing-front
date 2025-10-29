@@ -30,7 +30,6 @@ const activeProject = ref(null);
 
 function setActiveProject(project) {
   activeProject.value = project;
-  console.log('Project thumbnail data:', project.projectThumbnail);
 }
 
 function clearActiveProject() {

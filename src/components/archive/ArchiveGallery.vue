@@ -1,3 +1,8 @@
+<script setup>
+import { useStore } from '@/store';
+const store = useStore();
+</script>
+
 <template>
   <ul masonery>
     <li v-for="image in store.state.archiveData?.archiveGallery" :key="image.id">
@@ -5,9 +10,3 @@
     </li>
   </ul>
 </template>
-
-<script setup>
-import { useStore } from '@/store';
-
-const store = useStore();
-</script>

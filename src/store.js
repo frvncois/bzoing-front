@@ -1,93 +1,91 @@
-import { reactive } from 'vue';
-import api from './api.js';
+import { reactive } from 'vue'
+import api from '@/api.js'
 
-// Reactive state
 const state = reactive({
   projects: [],
   archiveData: {},
   homeData: {},
   infoData: {},
   loading: false,
-  error: null
-});
+  error: null,
+})
 
-// Actions
 const actions = {
   async fetchAllData() {
-    state.loading = true;
-    state.error = null;
-    
+    state.loading = true
+    state.error = null
+
     try {
-      const [projectsResult, archiveResult, homeResult, infoResult] = await Promise.allSettled([
+      const [projects, archive, home, info] = await Promise.allSettled([
         api.getProjects(),
-        api.getAll('archive'),
-        api.getAll('home'),
-        api.getAll('info')
-      ]);
+        api.getArchive(),
+        api.getHome(),
+        api.getInfo(),
+      ])
 
-      // Handle projects
-      if (projectsResult.status === 'fulfilled') {
-        state.projects = projectsResult.value.data || projectsResult.value;
-      } else {
-        console.error('Projects failed:', projectsResult.reason);
-      }
+      // Projects
+      if (projects.status === 'fulfilled') {
+        state.projects = projects.value.data || projects.value
+      } else console.error('Projects failed:', projects.reason)
 
-      // Handle archive
-      if (archiveResult.status === 'fulfilled') {
-        state.archiveData = archiveResult.value.data || archiveResult.value;
-      } else {
-        console.warn('Archive failed:', archiveResult.reason);
-        state.archiveData = {};
-      }
+      // Archive
+      if (archive.status === 'fulfilled') {
+        state.archiveData = archive.value.data || archive.value
+      } else console.warn('Archive failed:', archive.reason)
 
-      // Handle home
-      if (homeResult.status === 'fulfilled') {
-        state.homeData = homeResult.value.data || homeResult.value;
-      } else {
-        console.error('Home failed:', homeResult.reason);
-      }
+      // Home
+      if (home.status === 'fulfilled') {
+        state.homeData = home.value.data || home.value
+      } else console.warn('Home failed:', home.reason)
 
-      // Handle info
-      if (infoResult.status === 'fulfilled') {
-        state.infoData = infoResult.value.data || infoResult.value;
-      } else {
-        console.warn('Info failed:', infoResult.reason);
-        state.infoData = {};
-      }
-
+      // Info
+      if (info.status === 'fulfilled') {
+        state.infoData = info.value.data || info.value
+      } else console.warn('Info failed:', info.reason)
     } catch (error) {
-      console.error('Store error:', error);
-      state.error = error.message || 'Failed to load data';
+      console.error('Store error:', error)
+      state.error = error.message || 'Failed to load data'
     } finally {
-      state.loading = false;
+      state.loading = false
     }
   },
 
   async fetchProjects() {
     try {
-      const response = await api.getProjects();
-      state.projects = response.data;
+      const res = await api.getProjects()
+      state.projects = res.data || res
     } catch (error) {
-      state.error = error.message;
+      state.error = error.message
     }
   },
 
   async fetchHome() {
     try {
-      const response = await api.getAll('home');
-      state.homeData = response.data;
+      const res = await api.getHome()
+      state.homeData = res.data || res
     } catch (error) {
-      state.error = error.message;
+      state.error = error.message
     }
-  }
-};
+  },
 
-// Export store
-export const useStore = () => {
-  return {
-    state,
-    ...actions
-  };
-};
+  async fetchArchive() {
+    try {
+      const res = await api.getArchive()
+      state.archiveData = res.data || res
+    } catch (error) {
+      state.error = error.message
+    }
+  },
 
-export default useStore;
+  async fetchInfo() {
+    try {
+      const res = await api.getInfo()
+      state.infoData = res.data || res
+    } catch (error) {
+      state.error = error.message
+    }
+  },
+}
+
+export const useStore = () => ({ state, ...actions })
+export default useStore

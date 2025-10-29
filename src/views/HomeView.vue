@@ -1,15 +1,15 @@
 <script setup>
-import ProjectsList from '@/components/ProjectsList.vue';
-import HomeIntro from '@/components/HomeIntro.vue';
-import HomeSticky from '@/components/HomeSticky.vue';
-import GlobalFooter from '@/components/GlobalFooter.vue';
+  import HomeIntro from '@/components/home/HomeIntro.vue';
+  import HomeSticky from '@/components/home/HomeSticky.vue';
+  import HomeProjects from '@/components/home/HomeProjects.vue';
+  import GlobalFooter from '@/components/GlobalFooter.vue';
 </script>
 
 <template>
   <main>
     <HomeIntro />
     <HomeSticky />
-    <ProjectsList />
+    <HomeProjects />
     <GlobalFooter />
   </main>
 </template>
