@@ -218,7 +218,6 @@ ul:not([services]) {
     flex-direction: column;
     gap: var(--space-xlarge);
   }
-}
 
 ul:not([services]) {
     display: flex;
@@ -230,4 +229,6 @@ ul:not([services]) {
       }
     }
 }
+}
+
 </style>

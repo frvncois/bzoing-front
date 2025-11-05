@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import ArchiveGallery from '@/components/archive/ArchiveGallery.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
+import GlobalFooter from '@/components/global/GlobalFooter.vue'
 
 let originalBackgroundColor = ''
 

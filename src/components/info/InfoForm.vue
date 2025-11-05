@@ -90,15 +90,14 @@ form > ul {
 }
 
 input,
-textarea,
-span {
+textarea {
   border: none;
   width: 100%;
   padding: 0;
-  height: 1em;
+  height: 60px;
   line-height: 0.9;
   outline: none;
-  font-size: var(--font-medium);
+  font-size: var(--font-base);
   font-family: "body";
   resize: none;
 }
@@ -120,6 +119,7 @@ button {
 input::placeholder,
 textarea::placeholder {
   color: inherit;
+  font-size: var(--font-medium);
 }
 
 ul ul {
@@ -135,6 +135,7 @@ ul ul li {
   cursor: pointer;
   transition: color 0.2s ease;
   user-select: none;
+  font-size: var(--font-medium);
 }
 
 ul ul li.active {

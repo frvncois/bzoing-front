@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import GlobalHeader from './components/GlobalHeader.vue'
+import GlobalHeader from './components/global/GlobalHeader.vue'
 import { onMounted, ref, nextTick } from 'vue'
 import { useStore } from '@/store'
 

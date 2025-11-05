@@ -38,8 +38,11 @@ const lottie3 = ref(null)
 const lottie4 = ref(null)
 const videoElement = ref(null)
 const videoUrl = ref(videoFile)
+
 let animations = []
 let cleanupFns = []
+const MAX_TRAILS = 15
+const activeTrails = [] // global tracker of all clones
 
 function makeDraggable(el) {
   if (!el) return
@@ -66,8 +69,20 @@ function makeDraggable(el) {
     clone.style.pointerEvents = 'none'
     clone.style.userSelect = 'none'
     clone.style.zIndex = `${Math.floor(Math.random() * 50) + 1}`
+
     el.parentElement.appendChild(clone)
-    clone.addEventListener('animationend', () => clone.remove())
+    activeTrails.push(clone)
+
+    // Remove oldest if over cap
+    while (activeTrails.length > MAX_TRAILS) {
+      const oldest = activeTrails.shift()
+      oldest?.remove()
+    }
+
+    clone.addEventListener('animationend', () => {
+      activeTrails.splice(activeTrails.indexOf(clone), 1)
+      clone.remove()
+    })
   }
 
   const onPointerDown = (e) => {
@@ -113,15 +128,17 @@ onMounted(() => {
     lottie.loadAnimation({ container: lottie3.value, renderer: 'svg', loop: true, autoplay: true, animationData: lottie3Data }),
     lottie.loadAnimation({ container: lottie4.value, renderer: 'svg', loop: true, autoplay: true, animationData: lottie4Data })
   ]
-
   document.querySelectorAll('.draggable').forEach(makeDraggable)
 })
 
 onUnmounted(() => {
   animations.forEach(a => a?.destroy())
   cleanupFns.forEach(fn => fn())
+  activeTrails.forEach(t => t.remove())
+  activeTrails.length = 0
 })
 </script>
+
 
 <style scoped>
 [recreation] {

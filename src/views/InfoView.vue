@@ -5,7 +5,7 @@ import InfoIntro from '@/components/info/InfoIntro.vue';
 import InfoTeam from '@/components/info/InfoTeam.vue';
 import InfoServices from '@/components/info/InfoServices.vue';
 import InfoForm from '@/components/info/InfoForm.vue';
-import GlobalFooter from '@/components/GlobalFooter.vue';
+import GlobalFooter from '@/components/global/GlobalFooter.vue';
 </script>
 
 <template>

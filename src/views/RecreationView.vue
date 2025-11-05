@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
+import GlobalFooter from '@/components/global/GlobalFooter.vue'
 import RecreationMain from '@/components/recreation/RecreationMain.vue'
 
 let originalBackgroundColor = ''
