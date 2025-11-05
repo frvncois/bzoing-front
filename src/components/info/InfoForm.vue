@@ -124,11 +124,9 @@ textarea::placeholder {
 
 ul ul {
     display: flex;
-    flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.25rem;
-    position: absolute;
-    right: var(--space-small);
+    flex: 1;
+    justify-content: flex-end;
 }
 
 ul ul li {
@@ -154,14 +152,14 @@ ul ul li.active {
     }
     ul ul {
       display: flex;
-      flex-wrap: nowrap;
       gap: 0.5rem;
       margin-top: 0.25rem;
       position: relative;
       right: unset;
-  }
-  label, input, button, textarea, span {
-    font-size: var(--font-normal);
+      flex-wrap: wrap;
+      > li {
+        flex: 0;
+      }
   }
 }
 
