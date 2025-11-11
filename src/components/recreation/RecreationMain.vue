@@ -1,19 +1,20 @@
 <template>
   <div recreation>
-    <div class="full draggable" ref="lottie1" style="top: 5%; left: 0%; height: 75vh"></div>
-    <div class="full draggable" ref="lottie2" style="top: 5%; left: 72.5%; height: 85vh"></div>
-    <div class="lottie-item draggable" ref="lottie3" style="top: 15%; left: 25%"></div>
-    <div class="lottie-item draggable" ref="lottie4" style="top: 50%; left: 45%"></div>
+    <!-- Lotties -->
+    <div class="full draggable lottie1" ref="lottie1"></div>
+    <div class="full draggable lottie2" ref="lottie2"></div>
+    <div class="lottie-item draggable lottie3" ref="lottie3"></div>
+    <div class="lottie-item draggable lottie4" ref="lottie4"></div>
 
-    <div class="draggable" style="top: 40%; left: 25%">
-      <img src="@/assets/socks.svg" alt="socks" style="height:20vw;"/>
+    <!-- Images -->
+    <div class="draggable socks">
+      <img src="@/assets/socks.svg" alt="socks" />
     </div>
-    <div class="draggable" style="top: 40%; left: 60%;">
-      <img src="@/assets/letters.svg" alt="letters" style="height:20vw;" />
+    <div class="draggable letters">
+      <img src="@/assets/letters.svg" alt="letters" />
     </div>
-
-    <div class="draggable" style="top: 10%; left: 50%">
-      <img src="@/assets/cube.svg" alt="letters" style="height:20vw;" />
+    <div class="draggable cube">
+      <img src="@/assets/cube.svg" alt="cube" />
     </div>
   </div>
 </template>
@@ -58,33 +59,24 @@ function makeDraggable(el) {
     clone.classList.add('drag-trail')
     clone.style.left = `${x}px`
     clone.style.top = `${y}px`
-    clone.style.pointerEvents = 'none'
-    clone.style.userSelect = 'none'
-    clone.style.zIndex = `${Math.floor(Math.random() * 50) + 1}`
-
     el.parentElement.appendChild(clone)
     activeTrails.push(clone)
     while (activeTrails.length > MAX_TRAILS) {
       const oldest = activeTrails.shift()
       oldest?.remove()
     }
-
-    clone.addEventListener('animationend', () => {
-      activeTrails.splice(activeTrails.indexOf(clone), 1)
-      clone.remove()
-    })
+    clone.addEventListener('animationend', () => clone.remove())
   }
 
-  const onPointerDown = (e) => {
+  const onPointerDown = e => {
     isDragging = true
     el.style.cursor = 'grabbing'
-    el.classList.add('dragging')
     offsetX = e.clientX - el.offsetLeft
     offsetY = e.clientY - el.offsetTop
     el.setPointerCapture(e.pointerId)
   }
 
-  const onPointerMove = (e) => {
+  const onPointerMove = e => {
     if (!isDragging) return
     const x = e.clientX - offsetX
     const y = e.clientY - offsetY
@@ -93,10 +85,9 @@ function makeDraggable(el) {
     if (Math.random() > 0.6) createTrail(x, y)
   }
 
-  const onPointerUp = (e) => {
+  const onPointerUp = e => {
     isDragging = false
     el.style.cursor = 'grab'
-    el.classList.remove('dragging')
     el.releasePointerCapture(e.pointerId)
   }
 
@@ -129,7 +120,6 @@ onUnmounted(() => {
 })
 </script>
 
-
 <style scoped>
 [recreation] {
   position: absolute;
@@ -139,6 +129,7 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
+/* Generic draggable */
 .draggable {
   position: absolute;
   cursor: grab;
@@ -173,5 +164,99 @@ img,
 svg {
   user-select: none;
   pointer-events: none;
+  height: 20vw;
+}
+
+/* ────────── Element positions ────────── */
+.lottie1 {
+  top: 5%;
+  left: 0%;
+  height: 75vh;
+}
+
+.lottie2 {
+  top: 5%;
+  left: 72.5%;
+  height: 85vh;
+}
+
+.lottie3 {
+  top: 15%;
+  left: 25%;
+}
+
+.lottie4 {
+  top: 50%;
+  left: 45%;
+}
+
+.socks {
+  top: 40%;
+  left: 25%;
+}
+
+.letters {
+  top: 40%;
+  left: 60%;
+}
+
+.cube {
+  top: 10%;
+  left: 50%;
+}
+
+@media only screen and (max-width: 767px) {
+
+  [recreation] {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 200vh;
+}
+
+.lottie1 {
+  top: 0%;
+  left: 0%;
+  height: 75vh;
+}
+
+.lottie2 {
+  top: 60%;
+  left: 2.5%;
+  height: 85vh;
+}
+
+.lottie3 {
+  top: 30%;
+  left: 15%;
+}
+
+.lottie4 {
+  top: 55%;
+  left: 45%;
+}
+
+.socks {
+  top: 20%;
+  left: 45%;
+  height: 45vw;
+  width: 45vw;
+}
+
+.letters {
+  top: 45%;
+  left: 10%;
+}
+
+.cube {
+  top: 40%;
+  left: 35%;
+}
+img,
+svg {
+  user-select: none;
+  pointer-events: none;
+  height: 50vw;
+}
 }
 </style>

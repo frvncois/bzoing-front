@@ -118,15 +118,13 @@ li:nth-child(2) {
     display: flex;
     flex-direction: column;
     gap: var(--space-normal);
+    margin-top: var(--space-small);
   }
   ul li ul li {
     grid-column: span 2;
   }
 
-  p {
-    margin-top: var(--space-small);
-    
-  }
+
   ul h2 {
     font-size: var(--font-normal);
     cursor: pointer;
