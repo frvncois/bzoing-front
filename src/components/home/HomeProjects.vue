@@ -1,6 +1,6 @@
 <template>
   <ul projects>
-    <li v-for="project in store.state.projects"
+    <li v-for="project in sortedProjects"
         :key="project.id"
         @mouseenter="setActiveProject(project)"
         @mouseleave="clearActiveProject()"
@@ -20,31 +20,41 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from '@/store';
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
 
-const router = useRouter();
-const store = useStore();
-const activeProject = ref(null);
+const router = useRouter()
+const store = useStore()
+const activeProject = ref(null)
+
+// Sort projects by year descending
+const sortedProjects = computed(() => {
+  if (!store.state.projects) return []
+  return [...store.state.projects].sort((a, b) => {
+    const yearA = parseInt(a.projectYear, 10) || 0
+    const yearB = parseInt(b.projectYear, 10) || 0
+    return yearB - yearA // descending
+  })
+})
 
 function setActiveProject(project) {
-  activeProject.value = project;
+  activeProject.value = project
 }
 
 function clearActiveProject() {
-  activeProject.value = null;
+  activeProject.value = null
 }
 
 function navigateToProject(project) {
   const titleSlug = project.projectTitle
     .toLowerCase()
     .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '');
-  
+    .replace(/[^\w-]+/g, '')
+
   router.push({
     name: 'Project',
     params: { title: titleSlug }
-  });
+  })
 }
 </script>
