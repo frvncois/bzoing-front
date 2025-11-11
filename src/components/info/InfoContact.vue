@@ -111,7 +111,6 @@ ul h3 {
     margin-top: var(--space-small);
   }
 
-  /* collapsible: hide everything except first li when closed */
   ul:not([data-open='true']) li:not(:first-child) {
     display: none;
   }

@@ -22,3 +22,11 @@ onMounted(async () => {
     </li>
   </ul>
 </template>
+
+<style>
+@media only screen and (max-width: 767px) {
+    li:empty {
+    display: none !important;
+  }
+}
+</style>
