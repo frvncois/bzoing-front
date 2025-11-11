@@ -35,3 +35,9 @@ function closeGlobalNav() {
   showGlobalNav.value = false;
 }
 </script>
+
+<style scroped>
+header .is-mobile > nav {
+    text-transform: capitalize;
+}
+</style>

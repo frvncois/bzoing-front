@@ -110,7 +110,6 @@ header {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    text-transform: capitalize;
     position: fixed;
     top: 0;
     letter-spacing: -2%;
