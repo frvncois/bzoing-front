@@ -78,6 +78,7 @@ h1, h2, h3, h4 {
   font-size: inherit;
   font-weight: normal;
   margin-block: 0;
+  line-height: 1.1;
 }
 
 body {
@@ -277,7 +278,6 @@ video {
   display: flex;
   justify-content: space-between;
   gap: var(--space-large);
-  margin-bottom: var(--space-large);
   > li {
     position: relative;
     > h1 {
@@ -671,7 +671,6 @@ video {
     }
   }
   [services] {
-    margin-bottom: var(--space-large);
     & > li {
       > h2 {
           font-size: var(--font-medium);

@@ -22,12 +22,12 @@
   </ul>
 
   <!-- SECOND UL: description + numbered list -->
-  <ul :data-open="isOpen">
+  <ul services :data-open="isOpen" class="services-details">
     <li>
       <p v-html="renderRichText(store.state.infoData?.infoServices)" />
     </li>
     <li>
-      <ul>
+      <ul details>
         <li
           v-for="(service, index) in store.state.infoData?.infoList"
           :key="'desc-' + service.id"
@@ -78,9 +78,7 @@ function setupScrollWatcher() {
     })
   }
 
-  // Fire once on load
   handleScroll()
-
   window.addEventListener('scroll', handleScroll, { passive: true })
   window.addEventListener('resize', handleScroll, { passive: true })
 
@@ -93,7 +91,7 @@ function setupScrollWatcher() {
 /* ───────────── INIT ───────────── */
 watch(
   () => store.state.infoData,
-  async (data) => {
+  async data => {
     if (data?.infoList) {
       await nextTick()
       setupScrollWatcher()
@@ -164,29 +162,29 @@ ul[services] > li:not(:first-child):nth-child(odd) {
 }
 
 .service-index.active {
-  opacity: 1; /* no transition, instant change */
+  opacity: 1;
 }
 
-/* ─────────── SECOND UL (layout below) ─────────── */
-ul:not([services]) {
+ul[services].services-details {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   margin-bottom: var(--space-normal);
   gap: var(--space-normal);
+    margin-top: 2em;
 }
-ul:not([services]) > li:first-child {
+ul[services].services-details > li:first-child {
   grid-column: span 2;
 }
-ul:not([services]) > li:nth-child(2) {
+ul[services].services-details > li:nth-child(2) {
   grid-column: span 4;
 }
-ul:not([services]) > li:nth-child(2) ul {
+ul[services].services-details > li:nth-child(2) ul {
   gap: var(--space-normal);
   flex: 1;
   display: block;
   columns: 4;
 }
-ul:not([services]) > li:nth-child(2) ul > li {
+ul[services].services-details > li:nth-child(2) ul > li {
   display: grid;
   grid-template-columns: 0.15fr 1fr;
 }
@@ -196,6 +194,7 @@ ul:not([services]) > li:nth-child(2) ul > li {
   [services] > li > h1 {
     font-size: var(--font-medium);
   }
+
   [services] > li > h2 {
     font-size: var(--font-normal);
     cursor: pointer;
@@ -205,51 +204,49 @@ ul:not([services]) > li:nth-child(2) ul > li {
   ul[services] {
     flex-direction: column;
     gap: var(--space-small);
+    > li:not(:first-child) {
+      margin-bottom: var(--space-normal);
+    }
   }
 
-  ul[services] li:not(:first-child) {
-    margin-bottom: var(--space-xlarge);
-  }
+
 
   ul[services] .service-index {
     font-size: 25em;
-    opacity: 0;
   }
 
-  ul[services] .service-index.active {
-    opacity: 1;
+  /* Hide both when closed */
+  ul[services]:not([data-open='true']) > li:not(:first-child) {
+    display: none;
   }
 
-  ul:not([services]) {
+  /* Same hide rule applies to second UL */
+  ul[services].services-details:not([data-open='true']) {
+    display: none;
+  }
+
+  ul[services].services-details {
     display: flex;
     flex-direction: column;
   }
 
-  ul:not([services]) h1 {
+ul[details] li:last-child {
+  margin-bottom: 0;
+}
+
+  ul[services].services-details h1 {
     font-size: var(--font-medium);
     grid-column: span 6;
     margin-bottom: var(--space-xsmall);
   }
 
-  ul[services]:not([data-open='true']) > li:not(:first-child),
-  ul:not([services]):not([data-open='true']) > li {
-    display: none;
-  }
-
-  ul[services]:not([data-open='true']) {
-    gap: 0 !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  ul:not([services]):not([data-open='true']) {
-    display: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  ul:not([services]) > li:nth-child(2) > ul {
-    columns: 2;
+  ul[services].services-details > li:nth-child(2) > ul {
+    display: flex;
+    flex-direction: column;
+    gap:0;
+    li {
+      margin-bottom: 0;
+    }
   }
 }
 </style>
