@@ -23,14 +23,14 @@ body {
   height: auto;
 }
 
-html.lenis,
-html.lenis body {
+html.lenis {
   height: auto;
 }
 
 html.lenis body {
   min-height: 100%;
-  overflow: hidden;
+  height: auto;
+  overflow: auto;
 }
 
 html.lenis.lenis-smooth {
