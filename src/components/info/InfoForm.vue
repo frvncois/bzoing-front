@@ -5,9 +5,7 @@
       <h2 @click="toggleMobile">Formulaire</h2>
     </div>
 
-    <!-- 🧾 FORM -->
     <form>
-      <!-- LEFT COLUMN -->
       <ul>
         <li>
           <input type="text" id="name" name="name" placeholder="Nom" required />
@@ -84,7 +82,7 @@ textarea {
   border: none;
   width: 100%;
   padding: 0;
-  height: 60px;
+  height: 1em;
   line-height: 0.9;
   font-size: var(--font-medium);
   outline: none;
@@ -166,6 +164,9 @@ ul.services li.active {
 
   ul.services li {
     flex: 0 0 auto;
+  }
+  button, input, textarea {
+    font-size: var(--font-normal);
   }
 }
 </style>
