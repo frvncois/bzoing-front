@@ -6,6 +6,8 @@ import Lenis from 'lenis';
 
 const lenis = new Lenis({
   autoRaf: true,
+  smoothTouch: true,
+  touchMultiplier: 1.2,
 });
 
 const resizeLenis = () => {
