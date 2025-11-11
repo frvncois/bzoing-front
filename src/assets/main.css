@@ -677,13 +677,6 @@ video {
           font-size: var(--font-medium);
           max-width: 30ch;
       }
-      & > div {
-        > span {
-            rotate: -90deg;
-            color: var(--is-yellow);
-            font-size: var(--font-large);
-        }
-      }
     }
   }
   [single] {

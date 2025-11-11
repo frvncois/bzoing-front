@@ -49,20 +49,20 @@ function toggleMobile() {
 </script>
 
 <style scoped>
-/* ─────────────── DESKTOP ─────────────── */
 .formulaire-section {
   display: flex;
   flex-direction: column;
 }
 
 .mobile-title {
-  display: none; /* only show on mobile later */
+  display: none;
 }
 
 form {
   display: flex;
   gap: 2rem;
   margin-bottom: var(--space-small);
+  margin-top: var(--space-xlarge)
 }
 
 form > ul:first-child {

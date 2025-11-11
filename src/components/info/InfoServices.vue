@@ -10,9 +10,13 @@
       :key="service.id"
       ref="serviceItems"
     >
-      <div :ref="el => (serviceDivs[i] = el)" :data-index="service.serviceIndex" class="index-wrapper">
-        <span>{{ service.serviceIndex }}</span>
-      </div>
+      <span
+        :ref="el => (serviceSpans[i] = el)"
+        :data-index="service.serviceIndex"
+        class="service-index"
+      >
+        {{ service.serviceIndex }}
+      </span>
       <h1>{{ service.serviceTitle }}</h1>
     </li>
   </ul>
@@ -41,7 +45,7 @@ import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useStore } from '@/store'
 
 const store = useStore()
-const serviceDivs = ref([])
+const serviceSpans = ref([])
 const isOpen = ref(false)
 
 const isMobile = () => window.matchMedia('(max-width: 767px)').matches
@@ -51,71 +55,57 @@ function toggleMobile() {
 }
 
 /* ───────────── ONE NUMBER AT A TIME ───────────── */
-function setupSingleActiveIndex() {
-  let ticking = false
-
-  const updateActiveIndex = () => {
-    if (!serviceDivs.value.length) return
-    const viewportCenter = window.innerHeight / 2
+function setupScrollWatcher() {
+  const handleScroll = () => {
+    if (!serviceSpans.value.length) return
+    const scrollMid = window.innerHeight * 0.5
     let closest = null
-    let closestDistance = Infinity
+    let closestDist = Infinity
 
-    serviceDivs.value.forEach(div => {
-      if (!div) return
-      const rect = div.getBoundingClientRect()
-      const distance = Math.abs(rect.top + rect.height / 2 - viewportCenter)
-      if (distance < closestDistance) {
-        closestDistance = distance
-        closest = div
+    serviceSpans.value.forEach(span => {
+      if (!span) return
+      const rect = span.getBoundingClientRect()
+      const spanMid = rect.top + rect.height / 2
+      const dist = Math.abs(scrollMid - spanMid)
+      if (dist < closestDist) {
+        closestDist = dist
+        closest = span
       }
     })
 
-    // If we found one, show it
-    if (closest) {
-      serviceDivs.value.forEach(div => {
-        div.classList.toggle('active', div === closest)
-      })
-    }
+    serviceSpans.value.forEach(span => {
+      span.classList.toggle('active', span === closest)
+    })
   }
 
-  const onScroll = () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        updateActiveIndex()
-        ticking = false
-      })
-      ticking = true
-    }
-  }
+  // Fire once on load
+  handleScroll()
 
-  // initial call
-  updateActiveIndex()
-
-  window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', onScroll, { passive: true })
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('resize', handleScroll, { passive: true })
 
   onUnmounted(() => {
-    window.removeEventListener('scroll', onScroll)
-    window.removeEventListener('resize', onScroll)
+    window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('resize', handleScroll)
   })
 }
 
-/* ───────────── INITIALIZE ───────────── */
+/* ───────────── INIT ───────────── */
 watch(
   () => store.state.infoData,
-  async (newData) => {
-    if (newData && newData.infoList) {
+  async (data) => {
+    if (data?.infoList) {
       await nextTick()
-      setupSingleActiveIndex()
+      setupScrollWatcher()
     }
   },
   { immediate: true }
 )
 
 onMounted(async () => {
-  if (store.state.infoData && store.state.infoData.infoList) {
+  if (store.state.infoData?.infoList) {
     await nextTick()
-    setupSingleActiveIndex()
+    setupScrollWatcher()
   }
 })
 
@@ -128,8 +118,7 @@ function renderRichText(blocks) {
   if (Array.isArray(blocks)) {
     return blocks.map(block => {
       if (block.type === 'paragraph' && Array.isArray(block.children)) {
-        const text = block.children.map(c => c.text).join('')
-        return text.replace(/\n/g, '<br>')
+        return block.children.map(c => c.text).join('').replace(/\n/g, '<br>')
       }
       return ''
     }).join('')
@@ -148,18 +137,23 @@ ul[services] {
   flex-direction: column;
   gap: 0;
 }
+
 ul[services] > li {
   display: flex;
+  position: relative;
 }
+
 ul[services] > li:first-child {
   text-align: left;
   justify-content: flex-start;
 }
+
 ul[services] > li:not(:first-child):nth-child(odd) {
   text-align: right;
   justify-content: flex-end;
 }
-ul[services] span {
+
+.service-index {
   color: var(--is-yellow);
   font-size: var(--font-xlarge);
   margin-top: -0.15em;
@@ -168,11 +162,12 @@ ul[services] span {
   writing-mode: vertical-lr;
   opacity: 0;
 }
-ul[services] .index-wrapper.active span {
-  opacity: 1;
+
+.service-index.active {
+  opacity: 1; /* no transition, instant change */
 }
 
-/* ─────────── LAYOUT BELOW ─────────── */
+/* ─────────── SECOND UL (layout below) ─────────── */
 ul:not([services]) {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -216,8 +211,13 @@ ul:not([services]) > li:nth-child(2) ul > li {
     margin-bottom: var(--space-xlarge);
   }
 
-  ul[services] span {
+  ul[services] .service-index {
     font-size: 25em;
+    opacity: 0;
+  }
+
+  ul[services] .service-index.active {
+    opacity: 1;
   }
 
   ul:not([services]) {
