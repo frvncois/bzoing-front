@@ -1,24 +1,19 @@
 <template>
   <div recreation>
-    <!-- Lottie elements -->
     <div class="full draggable" ref="lottie1" style="top: 5%; left: 0%; height: 75vh"></div>
     <div class="full draggable" ref="lottie2" style="top: 5%; left: 72.5%; height: 85vh"></div>
     <div class="lottie-item draggable" ref="lottie3" style="top: 15%; left: 25%"></div>
     <div class="lottie-item draggable" ref="lottie4" style="top: 50%; left: 45%"></div>
 
-    <!-- Images -->
     <div class="draggable" style="top: 40%; left: 25%">
-      <img src="@/assets/socks.svg" alt="socks" />
+      <img src="@/assets/socks.svg" alt="socks" style="height:20vw;"/>
     </div>
     <div class="draggable" style="top: 40%; left: 60%;">
       <img src="@/assets/letters.svg" alt="letters" style="height:20vw;" />
     </div>
 
-    <!-- Video -->
-    <div class="draggable" ref="videoElement" style="top: 10%; left: 50%">
-      <video autoplay muted loop playsinline preload="auto">
-        <source :src="videoUrl" type="video/webm" />
-      </video>
+    <div class="draggable" style="top: 10%; left: 50%">
+      <img src="@/assets/cube.svg" alt="letters" style="height:20vw;" />
     </div>
   </div>
 </template>
@@ -26,7 +21,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
 import lottie from 'lottie-web'
-import videoFile from '@/assets/lotties/5.webm'
 import lottie1Data from '@/assets/lotties/1.json'
 import lottie2Data from '@/assets/lotties/2.json'
 import lottie3Data from '@/assets/lotties/3.json'
@@ -36,13 +30,11 @@ const lottie1 = ref(null)
 const lottie2 = ref(null)
 const lottie3 = ref(null)
 const lottie4 = ref(null)
-const videoElement = ref(null)
-const videoUrl = ref(videoFile)
 
 let animations = []
 let cleanupFns = []
-const MAX_TRAILS = 15
-const activeTrails = [] // global tracker of all clones
+const MAX_TRAILS = 10
+const activeTrails = []
 
 function makeDraggable(el) {
   if (!el) return
@@ -72,8 +64,6 @@ function makeDraggable(el) {
 
     el.parentElement.appendChild(clone)
     activeTrails.push(clone)
-
-    // Remove oldest if over cap
     while (activeTrails.length > MAX_TRAILS) {
       const oldest = activeTrails.shift()
       oldest?.remove()
@@ -172,11 +162,6 @@ onUnmounted(() => {
   height: 400px;
 }
 
-video {
-  width: 300px;
-  height: auto;
-}
-
 .drag-trail {
   position: absolute;
   transform: scale(0.95);
@@ -185,7 +170,6 @@ video {
 }
 
 img,
-video,
 svg {
   user-select: none;
   pointer-events: none;

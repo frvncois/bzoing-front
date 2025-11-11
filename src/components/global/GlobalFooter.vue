@@ -2,8 +2,8 @@
     <footer>
         <ul>
             <li>
-                <div>© 2025</div>
-                <div>Bzoing</div>
+                <div>© Bzoing</div>
+                <div>2025</div>
                 <div>4641 Av.Papineau<br>Montréal, QC, H2H 1V4</div>
             </li>
             <li>

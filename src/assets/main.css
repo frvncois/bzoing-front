@@ -18,6 +18,33 @@
   --is-white: #fff;
 }
 
+html,
+body {
+  height: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis body {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+html.lenis.lenis-stopped body {
+  overflow: hidden;
+}
+
+html.lenis-disabled body {
+  overflow: auto;
+}
+
 @font-face {
   font-family: 'body';
   src: url(body.otf);
@@ -106,6 +133,7 @@ header {
 
 button {
   color: currentColor;
+  font-weight: normal;
 }
 
 footer {
@@ -256,7 +284,6 @@ video {
     }
     > h2 {
       font-size: var(--font-medium);
-      margin-bottom: 0.125em;
     }
     & h3 {
       text-transform: uppercase;
@@ -612,6 +639,7 @@ video {
     }
   }
   [home] {
+    gap: var(--space-small);
     > li {
       padding-left: unset;
     }

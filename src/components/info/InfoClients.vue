@@ -1,7 +1,7 @@
 <template>
   <ul services>
-    <li>
-      <h2>Name drop</h2>
+    <li :data-open="isOpen">
+      <h2 @click="toggleMobile">Name drop</h2>
       <ul>
         <li>
           <p>
@@ -20,10 +20,17 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from '@/store'
 
 const store = useStore()
+const isOpen = ref(false)
+
+const isMobile = () => window.matchMedia('(max-width: 767px)').matches
+function toggleMobile() {
+  if (!isMobile()) return
+  isOpen.value = !isOpen.value
+}
 
 onMounted(async () => {
   if (!store.state.infoData || Object.keys(store.state.infoData).length === 0) {
@@ -33,13 +40,7 @@ onMounted(async () => {
 
 function renderRichText(blocks) {
   if (!blocks) return ''
-
-  // Handle Vue proxy
-  if (blocks.__v_isReactive || blocks.__v_isReadonly) {
-    blocks = Array.from(blocks)
-  }
-
-  // Handle if Strapi returns JSON string
+  if (blocks.__v_isReactive || blocks.__v_isReadonly) blocks = Array.from(blocks)
   if (typeof blocks === 'string') {
     try {
       blocks = JSON.parse(blocks)
@@ -47,31 +48,23 @@ function renderRichText(blocks) {
       return blocks
     }
   }
-
   if (!Array.isArray(blocks)) return ''
 
-  // Parse each block type
   return blocks
-    .map((block) => {
+    .map(block => {
       if (block.type === 'paragraph' && Array.isArray(block.children)) {
-        const text = block.children.map((c) => c.text).join('')
+        const text = block.children.map(c => c.text).join('')
         return `<p>${text.replace(/\n/g, '<br>')}</p>`
       }
-
-      // 👇 Handle unordered list
       if (block.type === 'list' && Array.isArray(block.children)) {
         const items = block.children
-          .map((item) => {
-            const text = item.children
-              .map((child) => child.text)
-              .join('')
-              .trim()
+          .map(item => {
+            const text = item.children.map(child => child.text).join('').trim()
             return `<div>${text}</div>`
           })
           .join('')
         return `<div>${items}</div>`
       }
-
       return ''
     })
     .join('')
@@ -82,55 +75,72 @@ function renderRichText(blocks) {
 ul li {
   display: flex;
   flex-direction: column;
-  ul {
+}
+ul li ul {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: var(--space-normal);
-    li {
-      grid-column: span 2;
-    }
-  }
+}
+ul li ul li {
+  grid-column: span 2;
 }
 li {
   display: flex;
   flex-direction: column;
   flex: 1;
-  &:nth-child(2) {
-    grid-column: span 4;
-    gap: var(--space-normal);
-    flex: 1;
-    display: block;
-    columns: 4;
-  }
+}
+li:nth-child(2) {
+  grid-column: span 4;
+  gap: var(--space-normal);
+  flex: 1;
+  display: block;
+  columns: 4;
 }
 
+/* ─────────── MOBILE ─────────── */
 @media only screen and (max-width: 767px) {
-  ul
-    li {
-    display: flex;
-    flex-direction: column;
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-normal);
-      li {
-        grid-column: span 2;
-      }
-    }
-    & h2 {
-    margin-top: var(--space-small);
-      font-size: var(--font-normal);
-    }
+  ul {
+    margin-bottom: 0;
   }
-  
-  li {
+  ul li {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    &:nth-child(2) {
-      gap: var(--space-normal);
-      columns: 2;
-    }
+    margin-top: 0;
+    transition: margin-bottom 0.2s ease;
+  }
+
+  /* margin only when open */
+  ul li[data-open='true'] {
+    margin-bottom: var(--space-normal);
+  }
+
+  ul li ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-normal);
+  }
+  ul li ul li {
+    grid-column: span 2;
+  }
+
+  p {
+    margin-top: var(--space-small);
+    
+  }
+  ul h2 {
+    font-size: var(--font-normal);
+    cursor: pointer;
+    position: relative;
+  }
+
+  /* hide content when closed */
+  li:not([data-open='true']) > ul {
+    display: none;
+  }
+
+  li:nth-child(2) {
+    gap: var(--space-normal);
+    columns: 2;
   }
 }
 </style>

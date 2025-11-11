@@ -1,92 +1,82 @@
 <template>
-  <form>
-    <ul>
-      <li>
-        <input type="text" id="name" name="name" placeholder="Nom" required />
-      </li>
-      <li>
-        <input type="text" id="entreprise" name="entreprise" placeholder="Entreprise" required />
-      </li>
-      <li>
-        <input type="tel" id="telephone" name="telephone" placeholder="Téléphone" required />
-      </li>
-      <li>
-        <input type="email" id="email" name="email" placeholder="Courriel" required />
-      </li>
-    </ul>
+  <section class="formulaire-section" :data-open="isOpen">
+    <!-- 🟡 MOBILE TITLE (TOGGLE) -->
+    <div class="mobile-title">
+      <h2 @click="toggleMobile">Formulaire</h2>
+    </div>
 
-    <ul>
-      <li>
-        <label>Service(s)</label>
-        <ul>
-          <li
-            v-for="(service, index) in services"
-            :key="index"
-            :class="{ active: selectedServices.includes(index) }"
-            @click="toggleService(index)"
-          >
-            <span>({{ index + 1 }})</span>
-          </li>
-        </ul>
-      </li>
+    <!-- 🧾 FORM -->
+    <form>
+      <!-- LEFT COLUMN -->
+      <ul>
+        <li>
+          <input type="text" id="name" name="name" placeholder="Nom" required />
+        </li>
+        <li>
+          <input type="text" id="entreprise" name="entreprise" placeholder="Entreprise" required />
+        </li>
+        <li>
+          <input type="tel" id="telephone" name="telephone" placeholder="Téléphone" required />
+        </li>
+        <li>
+          <input type="email" id="email" name="email" placeholder="Courriel" required />
+        </li>
+      </ul>
 
-      <li>
-        <input type="text" id="sujet" name="sujet" placeholder="Sujet" required />
-      </li>
-      <li>
-        <textarea id="message" name="message" placeholder="Message" required></textarea>
-      </li>
-      <li>
-        <button type="submit">Envoyer</button>
-      </li>
-    </ul>
-  </form>
+      <!-- RIGHT COLUMN -->
+      <ul>
+        <li>
+          <input type="text" id="sujet" name="sujet" placeholder="Sujet" required />
+        </li>
+        <li>
+          <textarea id="message" name="message" placeholder="Message" required></textarea>
+        </li>
+        <li>
+          <button type="submit">Envoyer</button>
+        </li>
+      </ul>
+    </form>
+  </section>
 </template>
 
 <script setup>
 import { ref } from "vue"
 
-const services = [
-  "Identité visuelle",
-  "Direction créative",
-  "Direction artistique",
-  "Design graphique",
-  "Stratégie de marque",
-  "Dév. web",
-  "Motion",
-  "Packaging",
-]
-
-const selectedServices = ref([])
-
-function toggleService(index) {
-  const i = selectedServices.value.indexOf(index)
-  if (i === -1) {
-    selectedServices.value.push(index)
-  } else {
-    selectedServices.value.splice(i, 1)
-  }
+const isOpen = ref(false)
+const isMobile = () => window.matchMedia("(max-width: 767px)").matches
+function toggleMobile() {
+  if (isMobile()) isOpen.value = !isOpen.value
 }
+
 </script>
 
 <style scoped>
+/* ─────────────── DESKTOP ─────────────── */
+.formulaire-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-title {
+  display: none; /* only show on mobile later */
+}
+
 form {
   display: flex;
   gap: 2rem;
   margin-bottom: var(--space-small);
 }
 
-form > ul {
-    &:first-child {
-        flex: 0.5;
-    }
-    &:last-child {
-        flex: 1;
-    }
-    li {
-        display: flex;
-        justify-content: space-between;
-    }
+form > ul:first-child {
+  flex: 0.5;
+}
+form > ul:last-child {
+  flex: 1;
+}
+
+form > ul li {
+  display: flex;
+  justify-content: space-between;
 }
 
 input,
@@ -96,71 +86,86 @@ textarea {
   padding: 0;
   height: 60px;
   line-height: 0.9;
+  font-size: var(--font-medium);
   outline: none;
-  font-size: var(--font-base);
   font-family: "body";
   resize: none;
 }
 
-
-label {
-    font-size: var(--font-medium);
-    font-family: "body";
-    white-space: nowrap;
+textarea {
+  height: 140px;
 }
 
 button {
-    font-size: var(--font-medium);
-    font-family: "body";
-    white-space: nowrap;
-    margin-left: auto;
+  font-size: var(--font-medium);
+  font-family: "body";
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 input::placeholder,
 textarea::placeholder {
   color: inherit;
-  font-size: var(--font-medium);
 }
 
-ul ul {
-    display: flex;
-    gap: 0.5rem;
-    flex: 1;
-    justify-content: flex-end;
+ul.services {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
 }
 
-ul ul li {
+ul.services li {
   cursor: pointer;
   transition: color 0.2s ease;
   user-select: none;
   font-size: var(--font-medium);
 }
 
-ul ul li.active {
+ul.services li.active {
   color: var(--is-yellow, #ffd100);
 }
 
+/* ─────────────── MOBILE ─────────────── */
 @media only screen and (max-width: 767px) {
+  /* Show the title */
+  .mobile-title {
+    display: block;
+    margin-bottom: var(--space-small);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .mobile-title h2 {
+    font-size: var(--font-normal);
+    position: relative;
+    padding-right: 1.5rem;
+  }
+  /* Collapsible form */
+  .formulaire-section:not([data-open="true"]) form {
+    display: none;
+  }
+
+  /* Stack inputs */
   form {
     display: flex;
     flex-direction: column;
-    > ul {
-      & li {
-        flex-direction: column;
-        }
-      }
-    }
-    ul ul {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.25rem;
-      position: relative;
-      right: unset;
-      flex-wrap: wrap;
-      > li {
-        flex: 0;
-      }
+    gap: 1.25rem;
+  }
+
+  form > ul li {
+    flex-direction: column;
+  }
+
+  ul.services {
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  ul.services li {
+    flex: 0 0 auto;
   }
 }
-
 </style>
