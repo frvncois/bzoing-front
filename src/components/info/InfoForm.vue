@@ -151,6 +151,8 @@ ul.services li.active {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+  margin-bottom: var(--space-small);
+  margin-top: var(--space-small)
   }
 
   form > ul li {
