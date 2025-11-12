@@ -56,27 +56,23 @@ function toggleMobile() {
 
 /* ───────────── ONE NUMBER AT A TIME ───────────── */
 function setupScrollWatcher() {
-  const handleScroll = () => {
-    if (!serviceSpans.value.length) return
-    const scrollMid = window.innerHeight * 0.5
-    let closest = null
-    let closestDist = Infinity
+const handleScroll = () => {
+  if (!serviceSpans.value.length) return
+  const triggerLine = window.innerHeight * 0.8
 
-    serviceSpans.value.forEach(span => {
-      if (!span) return
-      const rect = span.getBoundingClientRect()
-      const spanMid = rect.top + rect.height / 2
-      const dist = Math.abs(scrollMid - spanMid)
-      if (dist < closestDist) {
-        closestDist = dist
-        closest = span
-      }
-    })
+  let active = null
+  serviceSpans.value.forEach(span => {
+    if (!span) return
+    const rect = span.getBoundingClientRect()
+    const inView = rect.top < triggerLine && rect.bottom > triggerLine
+    if (inView && !active) active = span
+  })
 
-    serviceSpans.value.forEach(span => {
-      span.classList.toggle('active', span === closest)
-    })
-  }
+  serviceSpans.value.forEach(span => {
+    span.classList.toggle('active', span === active)
+  })
+}
+
 
   handleScroll()
   window.addEventListener('scroll', handleScroll, { passive: true })
@@ -133,7 +129,6 @@ h1 {
 /* ─────────── DESKTOP ─────────── */
 ul[services] {
   flex-direction: column;
-  gap: 0;
 }
 
 ul[services] > li {
@@ -168,9 +163,9 @@ ul[services] > li:not(:first-child):nth-child(odd) {
 ul[services].services-details {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  margin-bottom: var(--space-normal);
   gap: var(--space-normal);
-    margin-top: 2em;
+  margin-top: 2em;
+  margin-bottom: var(--space-normal);
 }
 ul[services].services-details > li:first-child {
   grid-column: span 2;
