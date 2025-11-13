@@ -15,9 +15,12 @@
         to="/info"
       >Infos</RouterLink>
       <RouterLink
-        to="/info"
+        to="/"
       >EN</RouterLink>
     </nav>
+      <button
+        to="/"
+      >EN</button>
     <button @click="toggleGlobalNav">menu</button>
     <GlobalNav v-if="showGlobalNav" @close="closeGlobalNav" />
   </header>
