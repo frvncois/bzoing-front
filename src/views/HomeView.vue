@@ -9,7 +9,7 @@
   <main>
     <HomeIntro />
     <HomeSticky />
-    <HomeProjects />
+    <section id="projects"><HomeProjects /></section>
     <GlobalFooter />
   </main>
 </template>

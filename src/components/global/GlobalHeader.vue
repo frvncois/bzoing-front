@@ -3,17 +3,20 @@
     <h1><RouterLink to="/">Bzoing</RouterLink></h1>
     <nav>
       <RouterLink
-        to="/"
+        :to="{ path: '/', hash: '#projects' }"
       >Projets</RouterLink>
       <RouterLink
         to="/archive"
-      >Archive</RouterLink>
+      >Archives</RouterLink>
       <RouterLink
         to="/recreation"
       >Récréation</RouterLink>
       <RouterLink
         to="/info"
-      >Info</RouterLink>
+      >Infos</RouterLink>
+      <RouterLink
+        to="/info"
+      >EN</RouterLink>
     </nav>
     <button @click="toggleGlobalNav">menu</button>
     <GlobalNav v-if="showGlobalNav" @close="closeGlobalNav" />

@@ -1,5 +1,5 @@
 import './assets/main.css';
-import { createApp, nextTick } from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import Lenis from 'lenis';
@@ -31,19 +31,6 @@ const applyMotionPreference = () => {
 
 prefersReducedMotion.addEventListener('change', applyMotionPreference);
 applyMotionPreference();
-
-const resetScroll = async () => {
-  if (prefersReducedMotion.matches) {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  } else {
-    lenis.scrollTo(0, { immediate: true });
-  }
-
-  await nextTick();
-  resizeLenis();
-};
-
-router.afterEach(resetScroll);
 
 const app = createApp(App);
 app.use(router);

@@ -145,6 +145,10 @@ ul[services] > li:not(:first-child):nth-child(odd) {
   text-align: right;
   justify-content: flex-end;
 }
+ul[services] > li:nth-child(n+3) span {
+  margin-top: -0.33em;
+}
+
 
 .service-index {
   color: var(--is-yellow);

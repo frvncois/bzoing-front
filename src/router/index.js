@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ArchiveView from '../views/ArchiveView.vue'
 import RecreationView from '../views/RecreationView.vue'
 import InfoView from '../views/InfoView.vue'
-import ProjectView from '../views/ProjectView.vue' 
+import ProjectView from '../views/ProjectView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: '/archive',
       name: 'Archive',
-      component: ArchiveView, 
+      component: ArchiveView,
     },
     {
       path: '/recreation',
@@ -35,6 +35,41 @@ const router = createRouter({
       props: true
     }
   ],
+  scrollBehavior(to, from) {
+    if (window.lenis) {
+      if (to.hash) {
+        // First scroll to top immediately to reset position
+        window.lenis.scrollTo(0, { immediate: true })
+
+        // Wait for DOM to be ready, then scroll to hash element
+        return new Promise((resolve) => {
+          const scrollToElement = () => {
+            const element = document.querySelector(to.hash)
+            if (element) {
+              // Force Lenis to update
+              window.lenis.resize()
+
+              setTimeout(() => {
+                const elementTop = element.offsetTop
+                const windowHeight = window.innerHeight
+                const elementHeight = element.offsetHeight
+                const scrollTo = elementTop - windowHeight + elementHeight
+                window.lenis.scrollTo(scrollTo, { immediate: true })
+                resolve()
+              }, 50)
+            } else {
+              // Element not found, try again
+              setTimeout(scrollToElement, 50)
+            }
+          }
+          setTimeout(scrollToElement, 200)
+        })
+      } else {
+        // No hash, instantly jump to top
+        window.lenis.scrollTo(0, { immediate: true })
+      }
+    }
+  }
 })
 
 export default router
