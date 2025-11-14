@@ -53,7 +53,7 @@ const router = createRouter({
                 const elementTop = element.offsetTop
                 const windowHeight = window.innerHeight
                 // Position element 25% from top of screen
-                const offset = windowHeight * 0.25
+                const offset = windowHeight * 0.65
                 const scrollTo = elementTop - offset
                 window.lenis.scrollTo(scrollTo, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
                 resolve()
