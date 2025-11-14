@@ -52,9 +52,10 @@ const router = createRouter({
               setTimeout(() => {
                 const elementTop = element.offsetTop
                 const windowHeight = window.innerHeight
-                const elementHeight = element.offsetHeight
-                const scrollTo = elementTop - windowHeight + elementHeight
-                window.lenis.scrollTo(scrollTo, { immediate: true })
+                // Position element 25% from top of screen
+                const offset = windowHeight * 0.25
+                const scrollTo = elementTop - offset
+                window.lenis.scrollTo(scrollTo, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
                 resolve()
               }, 50)
             } else {
