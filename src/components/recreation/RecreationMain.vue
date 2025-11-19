@@ -211,24 +211,25 @@ svg {
   position: absolute;
   inset: 0;
   width: 100vw;
-  height: 200vh;
+  height: 100vh;
 }
 
 .lottie1 {
-  top: 0%;
-  left: 0%;
-  height: 75vh;
+  top: 5%;
+  left: -10%;
+  height: 38vh;
 }
 
 .lottie2 {
-  top: 60%;
+  top: 50%;
   left: 2.5%;
-  height: 85vh;
+  height: 45vh;
 }
 
 .lottie3 {
-  top: 30%;
-  left: 15%;
+  top: 35%;
+  left: 55%;
+  height: 15vh;
 }
 
 .lottie4 {
@@ -237,26 +238,26 @@ svg {
 }
 
 .socks {
-  top: 20%;
-  left: 45%;
-  height: 45vw;
-  width: 45vw;
+  top: 10%;
+  left: 65%;
+  height: 15vw;
+  width: 15vw;
 }
 
 .letters {
-  top: 45%;
-  left: 10%;
+  top: 40%;
+  left: 0%;
 }
 
 .cube {
-  top: 40%;
+  top: 35%;
   left: 35%;
 }
 img,
 svg {
   user-select: none;
   pointer-events: none;
-  height: 50vw;
+  height: 35vw;
 }
 }
 </style>

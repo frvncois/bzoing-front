@@ -211,7 +211,7 @@ ul[services].services-details > li:nth-child(2) ul > li {
 
 
   ul[services] .service-index {
-    font-size: 25em;
+    font-size: 18em;
   }
 
   /* Hide both when closed */

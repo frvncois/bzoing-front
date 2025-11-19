@@ -58,3 +58,9 @@ function navigateToProject(project) {
   })
 }
 </script>
+
+<style scoped>
+h1, span {
+  line-height: 0.95;
+}
+</style>

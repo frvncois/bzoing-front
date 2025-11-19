@@ -33,7 +33,6 @@ onUnmounted(() => {
 @media only screen and (max-width: 767px) {
   :deep(footer) {
   position: absolute;
-  top: 191vh;
   bottom: var(--space-xsmall);
   left: var(--space-xsmall);
   right: var(--space-xsmall);
