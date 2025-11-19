@@ -82,7 +82,7 @@ textarea {
   border: none;
   width: 100%;
   padding: 0;
-  height: 1em;
+  height: 0.96em;
   line-height: 0.9;
   font-size: var(--font-medium);
   outline: none;
@@ -151,8 +151,8 @@ ul.services li.active {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-  margin-bottom: var(--space-small);
-  margin-top: var(--space-small)
+    margin-bottom: var(--space-small);
+    margin-top: var(--space-small);
   }
 
   form > ul li {

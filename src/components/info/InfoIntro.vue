@@ -24,6 +24,7 @@ onMounted(async () => {
 <style scoped>
 p {
   font-size: var(--font-medium);
+  line-height: 0.9;
 }
 
 @media only screen and (max-width: 767px) {

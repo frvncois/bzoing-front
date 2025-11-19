@@ -52,14 +52,12 @@ const router = createRouter({
               setTimeout(() => {
                 const elementTop = element.offsetTop
                 const windowHeight = window.innerHeight
-                // Position element 25% from top of screen
-                const offset = windowHeight * 0.55
+                const offset = windowHeight * 0.60
                 const scrollTo = elementTop - offset
                 window.lenis.scrollTo(scrollTo, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
                 resolve()
               }, 50)
             } else {
-              // Element not found, try again
               setTimeout(scrollToElement, 50)
             }
           }
