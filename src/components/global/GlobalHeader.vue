@@ -1,6 +1,12 @@
 <template>
   <header>
-    <h1><RouterLink to="/">Bzoing</RouterLink></h1>
+    <h1><RouterLink to="/">Bzoing</RouterLink>
+    
+          <RouterLink
+        to="/"
+      >EN</RouterLink>
+    </h1>
+
     <nav>
       <RouterLink
         :to="{ path: '/', hash: '#projects' }"
@@ -14,9 +20,6 @@
       <RouterLink
         to="/info"
       >Infos</RouterLink>
-      <RouterLink
-        to="/"
-      >EN</RouterLink>
     </nav>
       <button
         to="/"
