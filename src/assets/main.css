@@ -105,8 +105,7 @@ header {
     display: flex;
     justify-content: space-between;
     > a {
-
-    padding-right: var(--space-large);
+      padding-right: var(--space-large);
     }
   }
   > button {
@@ -606,13 +605,16 @@ video {
   header {
     >  nav {
         display: none;
-        
+      }
+      & h1 a:last-child {
+        display: none;
       }
     > button {
       display: block;
       font-size: var(--font-base);
       text-transform: uppercase;
     }
+
   }
 
   footer {
