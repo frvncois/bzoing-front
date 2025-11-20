@@ -220,27 +220,31 @@ svg {
   top: 2em;
   left: 0em;
   right: auto;
-  height: 35vh;
+  height: auto;
+  width: 12.5em!important;
 }
 
 .lottie2 {
   top: 55%;
   left: 0em;
-  height: 40vh;
+  height: auto;
+  width: 15em!important;
 }
 
 .lottie3 {
   top: 45%;
   left: auto;
   right: 2em;
-  height: 15vh;
+  height: auto;
+  width: 8.5em!important;
 }
 
 .lottie4 {
   top: 65%;
   right: 1em;
   left: auto;
-  height: 20vh;
+  height: auto;
+  width: 12.5em!important;
 }
 
 .socks {
@@ -257,10 +261,6 @@ svg {
 .cube {
   top: 30%;
   left: 35%;
-}
-
-.full {
-  width: auto;
 }
 
 img,
