@@ -220,22 +220,22 @@ svg {
   top: 2em;
   left: 0em;
   right: auto;
-  height: 20em!important;
-  width: 12.5em!important;
+  height: 15em!important;
+  width: 10.5em!important;
 }
 
 .lottie2 {
   top: 55%;
   left: 0em;
-  height: 20em!important;
-  width: 15em!important;
+  height: 15em!important;
+  width: 10em!important;
 }
 
 .lottie3 {
-  top: 45%;
+  top: 40%;
   left: auto;
-  right: 2em;
-  height: 10em!important;
+  right: 0em;
+  height: 8em!important;
   width: 8.5em!important;
 }
 
@@ -243,8 +243,8 @@ svg {
   top: 65%;
   right: 1em;
   left: auto;
-  height: 15em!important;
-  width: 12.5em!important;
+  height: 8em!important;
+  width: 8em!important;
 }
 
 .socks {
@@ -255,11 +255,11 @@ svg {
 
 .letters {
   top: 35%;
-  left: 0%;
+  left: 05%;
 }
 
 .cube {
-  top: 30%;
+  top: 35%;
   left: 35%;
 }
 
