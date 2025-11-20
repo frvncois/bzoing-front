@@ -220,14 +220,14 @@ svg {
   top: 2em;
   left: 0em;
   right: auto;
-  height: auto;
+  height: 20em!important;
   width: 12.5em!important;
 }
 
 .lottie2 {
   top: 55%;
   left: 0em;
-  height: auto;
+  height: 20em!important;
   width: 15em!important;
 }
 
@@ -235,7 +235,7 @@ svg {
   top: 45%;
   left: auto;
   right: 2em;
-  height: auto;
+  height: 10em!important;
   width: 8.5em!important;
 }
 
@@ -243,7 +243,7 @@ svg {
   top: 65%;
   right: 1em;
   left: auto;
-  height: auto;
+  height: 15em!important;
   width: 12.5em!important;
 }
 
