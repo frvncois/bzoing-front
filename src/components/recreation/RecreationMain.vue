@@ -207,6 +207,8 @@ svg {
 
 @media only screen and (max-width: 767px) {
 
+
+
   [recreation] {
   position: absolute;
   inset: 0;
@@ -219,14 +221,12 @@ svg {
   left: 0em;
   right: auto;
   height: 35vh;
-  width: auto;
 }
 
 .lottie2 {
   top: 55%;
   left: 0em;
   height: 40vh;
-  width: auto;
 }
 
 .lottie3 {
@@ -234,7 +234,6 @@ svg {
   left: auto;
   right: 2em;
   height: 15vh;
-  width: auto;
 }
 
 .lottie4 {
@@ -242,14 +241,12 @@ svg {
   right: 1em;
   left: auto;
   height: 20vh;
-  width: auto;
 }
 
 .socks {
   top: 10%;
   left: 65%;
   height: 15vw;
-  width: 15vw;
 }
 
 .letters {
@@ -261,6 +258,11 @@ svg {
   top: 30%;
   left: 35%;
 }
+
+.full {
+  width: auto;
+}
+
 img,
 svg {
   user-select: none;
