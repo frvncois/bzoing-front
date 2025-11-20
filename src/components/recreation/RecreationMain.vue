@@ -125,7 +125,7 @@ onUnmounted(() => {
   position: absolute;
   inset: 0;
   width: 100vw;
-  height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
 }
 
@@ -169,7 +169,7 @@ svg {
 
 /* ────────── Element positions ────────── */
 .lottie1 {
-  top: 5%;
+  top: 5em;
   left: 0%;
   height: 75vh;
 }
@@ -215,27 +215,34 @@ svg {
 }
 
 .lottie1 {
-  top: 2.5%;
-  left: -18%;
+  top: 2em;
+  left: 0em;
+  right: auto;
   height: 35vh;
+  width: auto;
 }
 
 .lottie2 {
   top: 55%;
-  left: -10%;
+  left: 0em;
   height: 40vh;
+  width: auto;
 }
 
 .lottie3 {
-  top: 35%;
-  left: 55%;
+  top: 45%;
+  left: auto;
+  right: 2em;
   height: 15vh;
+  width: auto;
 }
 
 .lottie4 {
-  top: 55%;
-  left: 55%;
-  width: 20vh;
+  top: 65%;
+  right: 1em;
+  left: auto;
+  height: 20vh;
+  width: auto;
 }
 
 .socks {
