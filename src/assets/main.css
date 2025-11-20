@@ -667,7 +667,7 @@ video {
   }
   [projects] {
   font-size: var(--font-normal);
-  margin-top: 50vh;
+  padding-top: 52vh;
     > li {
       > div {
         display: none;

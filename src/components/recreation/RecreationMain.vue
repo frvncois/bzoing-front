@@ -201,7 +201,7 @@ svg {
 }
 
 .cube {
-  top: 10%;
+  top: 20%;
   left: 50%;
 }
 
@@ -215,15 +215,15 @@ svg {
 }
 
 .lottie1 {
-  top: 5%;
-  left: -10%;
-  height: 38vh;
+  top: 2.5%;
+  left: -18%;
+  height: 35vh;
 }
 
 .lottie2 {
-  top: 50%;
-  left: 2.5%;
-  height: 45vh;
+  top: 55%;
+  left: -10%;
+  height: 40vh;
 }
 
 .lottie3 {
@@ -234,7 +234,8 @@ svg {
 
 .lottie4 {
   top: 55%;
-  left: 45%;
+  left: 55%;
+  width: 20vh;
 }
 
 .socks {
@@ -245,12 +246,12 @@ svg {
 }
 
 .letters {
-  top: 40%;
+  top: 35%;
   left: 0%;
 }
 
 .cube {
-  top: 35%;
+  top: 30%;
   left: 35%;
 }
 img,
