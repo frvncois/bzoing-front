@@ -20,8 +20,17 @@ const PROJECT_POPULATE_QUERY = [
 const documentFilter = (documentId) =>
   `filters[documentId][$eq]=${encodeURIComponent(documentId)}`
 
-const doRequest = async (url) => {
-  const { data } = await api.get(url)
+const appendLocaleParam = (url, locale) => {
+  if (!locale) return url
+
+  const [path, hash] = url.split('#')
+  const separator = path.includes('?') ? '&' : '?'
+  return `${path}${separator}locale=${encodeURIComponent(locale)}${hash ? `#${hash}` : ''}`
+}
+
+const doRequest = async (url, locale) => {
+  const finalUrl = appendLocaleParam(url, locale)
+  const { data } = await api.get(finalUrl)
   return data
 }
 
@@ -117,7 +126,7 @@ const extractCollection = (payload) => {
   return []
 }
 
-const requestProjectWithFallbacks = async (identifier) => {
+const requestProjectWithFallbacks = async (identifier, locale) => {
   const attempts = []
 
   attempts.push(`/projects/${identifier}?${PROJECT_POPULATE_QUERY}`)
@@ -133,7 +142,7 @@ const requestProjectWithFallbacks = async (identifier) => {
 
   for (const url of attempts) {
     try {
-      const data = await doRequest(url)
+      const data = await doRequest(url, locale)
       const records = extractCollection(data)
       if (!records.length) continue
       if (records.length === 1) return normalizeProject(records[0])
@@ -152,9 +161,9 @@ const requestProjectWithFallbacks = async (identifier) => {
   return null
 }
 
-const requestProjectsCollection = async () => {
+const requestProjectsCollection = async (locale) => {
   try {
-    const data = await doRequest(`/projects?${PROJECT_POPULATE_QUERY}`)
+    const data = await doRequest(`/projects?${PROJECT_POPULATE_QUERY}`, locale)
     return extractCollection(data).map((entry) => normalizeProject(entry)).filter(Boolean)
   } catch (error) {
     console.warn('Project collection populate fetch failed', {
@@ -164,7 +173,7 @@ const requestProjectsCollection = async () => {
   }
 
   try {
-    const data = await doRequest('/projects?populate=*')
+    const data = await doRequest('/projects?populate=*', locale)
     return extractCollection(data).map((entry) => normalizeProject(entry)).filter(Boolean)
   } catch (error) {
     console.warn('Project collection fallback populate=* failed', {
@@ -173,7 +182,7 @@ const requestProjectsCollection = async () => {
     })
   }
 
-  const data = await doRequest('/projects')
+  const data = await doRequest('/projects', locale)
   const baseCollection = extractCollection(data)
 
   const hydrated = await Promise.all(
@@ -181,7 +190,7 @@ const requestProjectsCollection = async () => {
       const project = normalizeProject(entry)
       if (!project) return null
 
-      const detailed = await requestProjectWithFallbacks(project.documentId || project.id)
+      const detailed = await requestProjectWithFallbacks(project.documentId || project.id, locale)
       return detailed || project
     })
   )
@@ -202,46 +211,46 @@ api.interceptors.response.use(
   }
 )
 
-const getProjects = async () => requestProjectsCollection()
+const getProjects = async (locale) => requestProjectsCollection(locale)
 
-const getProject = async (idOrDocumentId) => {
-  const result = await requestProjectWithFallbacks(idOrDocumentId)
+const getProject = async (idOrDocumentId, locale) => {
+  const result = await requestProjectWithFallbacks(idOrDocumentId, locale)
   if (Array.isArray(result)) return result[0] || null
   return result
 }
 
-const getProjectGallery = async (idOrDocumentId) => {
-  const result = await requestProjectWithFallbacks(idOrDocumentId)
+const getProjectGallery = async (idOrDocumentId, locale) => {
+  const result = await requestProjectWithFallbacks(idOrDocumentId, locale)
   if (Array.isArray(result)) return result
   return result ? result.projectGallery : []
 }
 
 export default {
-  async getHome() {
-    const data = await doRequest('/home?populate=*')
+  async getHome(locale) {
+    const data = await doRequest('/home?populate=*', locale)
     return data
   },
 
-  async getInfo() {
-    const data = await doRequest('/info?populate=*')
+  async getInfo(locale) {
+    const data = await doRequest('/info?populate=*', locale)
     return data
   },
 
-  async getArchive() {
-    const data = await doRequest('/archive?populate=*')
+  async getArchive(locale) {
+    const data = await doRequest('/archive?populate=*', locale)
     return data
   },
 
-  async getProjects() {
-    return getProjects()
+  async getProjects(locale) {
+    return getProjects(locale)
   },
 
-  async getProject(id) {
-    return getProject(id)
+  async getProject(id, locale) {
+    return getProject(id, locale)
   },
 
-  async getProjectGallery(id) {
-    return getProjectGallery(id)
+  async getProjectGallery(id, locale) {
+    return getProjectGallery(id, locale)
   },
 
   async getFile(id) {

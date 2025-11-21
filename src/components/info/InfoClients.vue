@@ -1,14 +1,11 @@
 <template>
   <ul services>
     <li :data-open="isOpen">
-      <h2 @click="toggleMobile">Name drop</h2>
+      <h2 @click="toggleMobile">{{ t('info.clients.title') }}</h2>
       <ul>
         <li>
           <p>
-            Au fil des années, nous avons eu le plaisir de collaborer avec des
-            marques, institutions et entreprises aux profils variés. Nous
-            privilégions les projets qui partagent cette vision et voulons créer
-            des liens durables avec des clients qui ont envie de se démarquer.
+            {{ t('info.clients.intro') }}
           </p>
         </li>
         <li>
@@ -22,9 +19,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useStore } from '@/store'
+import { useTranslations } from '@/translation'
 
 const store = useStore()
 const isOpen = ref(false)
+const { t } = useTranslations()
 
 const isMobile = () => window.matchMedia('(max-width: 767px)').matches
 function toggleMobile() {
@@ -97,7 +96,6 @@ li:nth-child(2) {
   columns: 4;
 }
 
-/* ─────────── MOBILE ─────────── */
 @media only screen and (max-width: 767px) {
   ul {
     margin-bottom: 0;
@@ -109,7 +107,6 @@ li:nth-child(2) {
     transition: margin-bottom 0.2s ease;
   }
 
-  /* margin only when open */
   ul li[data-open='true'] {
     margin-bottom: var(--space-normal);
   }
@@ -131,7 +128,6 @@ li:nth-child(2) {
     position: relative;
   }
 
-  /* hide content when closed */
   li:not([data-open='true']) > ul {
     display: none;
   }

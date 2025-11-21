@@ -1,36 +1,52 @@
 <template>
   <section class="formulaire-section" :data-open="isOpen">
-    <!-- 🟡 MOBILE TITLE (TOGGLE) -->
     <div class="mobile-title">
-      <h2 @click="toggleMobile">Formulaire</h2>
+      <h2 @click="toggleMobile">{{ formCopy.title }}</h2>
     </div>
 
     <form>
       <ul>
         <li>
-          <input type="text" id="name" name="name" placeholder="Nom" required />
+          <input type="text" id="name" name="name" :placeholder="formCopy.fields.name" required />
         </li>
         <li>
-          <input type="text" id="entreprise" name="entreprise" placeholder="Entreprise" required />
+          <input
+            type="text"
+            id="entreprise"
+            name="entreprise"
+            :placeholder="formCopy.fields.company"
+            required
+          />
         </li>
         <li>
-          <input type="tel" id="telephone" name="telephone" placeholder="Téléphone" required />
+          <input
+            type="tel"
+            id="telephone"
+            name="telephone"
+            :placeholder="formCopy.fields.phone"
+            required
+          />
         </li>
         <li>
-          <input type="email" id="email" name="email" placeholder="Courriel" required />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            :placeholder="formCopy.fields.email"
+            required
+          />
         </li>
       </ul>
 
-      <!-- RIGHT COLUMN -->
       <ul>
         <li>
-          <input type="text" id="sujet" name="sujet" placeholder="Sujet" required />
+          <input type="text" id="sujet" name="sujet" :placeholder="formCopy.fields.subject" required />
         </li>
         <li>
-          <textarea id="message" name="message" placeholder="Message" required></textarea>
+          <textarea id="message" name="message" :placeholder="formCopy.fields.message" required></textarea>
         </li>
         <li>
-          <button type="submit">Envoyer</button>
+          <button type="submit">{{ formCopy.submit }}</button>
         </li>
       </ul>
     </form>
@@ -38,10 +54,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { computed, ref } from 'vue'
+import { useTranslations } from '@/translation'
 
+const { dictionary } = useTranslations()
+const formCopy = computed(() => dictionary.value?.info?.form || { fields: {} })
 const isOpen = ref(false)
-const isMobile = () => window.matchMedia("(max-width: 767px)").matches
+const isMobile = () => window.matchMedia('(max-width: 767px)').matches
 function toggleMobile() {
   if (isMobile()) isOpen.value = !isOpen.value
 }
@@ -126,9 +145,7 @@ ul.services li.active {
   color: var(--is-yellow, #ffd100);
 }
 
-/* ─────────────── MOBILE ─────────────── */
 @media only screen and (max-width: 767px) {
-  /* Show the title */
   .mobile-title {
     display: block;
     margin-bottom: var(--space-small);
@@ -141,12 +158,10 @@ ul.services li.active {
     position: relative;
     padding-right: 1.5rem;
   }
-  /* Collapsible form */
   .formulaire-section:not([data-open="true"]) form {
     display: none;
   }
 
-  /* Stack inputs */
   form {
     display: flex;
     flex-direction: column;

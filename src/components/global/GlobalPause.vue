@@ -56,54 +56,43 @@ const resetInactivityTimer = () => {
     clearTimeout(inactivityTimer);
     clearInterval(revealInterval);
     
-    // Reset all opacities to 0
     allImageKeys.forEach(key => {
         opacities.value[key] = 0;
     });
     
-    // Start new inactivity timer
     inactivityTimer = setTimeout(() => {
         startRevealingImages();
-    }, 5000); // 5 seconds of inactivity
+    }, 5000);
 };
 
-// Function to show images randomly
 const startRevealingImages = () => {
-    // Create a copy of allImageKeys that we can modify
     const remainingKeys = [...allImageKeys];
     
-    // Calculate interval time to distribute all reveals within 10 seconds
     const intervalTime = 10000 / remainingKeys.length;
     
-    // Show an image randomly at calculated intervals
     revealInterval = setInterval(() => {
         if (remainingKeys.length === 0) {
             clearInterval(revealInterval);
             return;
         }
         
-        // Select random image from remaining images
         const randomIndex = Math.floor(Math.random() * remainingKeys.length);
         const selectedKey = remainingKeys.splice(randomIndex, 1)[0];
         
-        // Set opacity to 1
         opacities.value[selectedKey] = 1;
         
-        // If all images shown, clear interval
         if (remainingKeys.length === 0) {
             clearInterval(revealInterval);
         }
     }, intervalTime);
 };
 
-// Set up mouse movement and scroll listeners
 onMounted(() => {
     window.addEventListener('mousemove', resetInactivityTimer);
     window.addEventListener('scroll', resetInactivityTimer);
-    resetInactivityTimer(); // Start the initial timer
+    resetInactivityTimer();
 });
 
-// Clean up listeners when component unmounts
 onUnmounted(() => {
     window.removeEventListener('mousemove', resetInactivityTimer);
     window.removeEventListener('scroll', resetInactivityTimer);

@@ -1,8 +1,7 @@
 <template>
-  <!-- FIRST UL: title + scrolling titles -->
   <ul services :data-open="isOpen">
     <li>
-      <h2 @click="toggleMobile">Services</h2>
+      <h2 @click="toggleMobile">{{ t('info.services.title') }}</h2>
     </li>
 
     <li
@@ -21,7 +20,6 @@
     </li>
   </ul>
 
-  <!-- SECOND UL: description + numbered list -->
   <ul services :data-open="isOpen" class="services-details">
     <li>
       <p v-html="renderRichText(store.state.infoData?.infoServices)" />
@@ -43,10 +41,12 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useStore } from '@/store'
+import { useTranslations } from '@/translation'
 
 const store = useStore()
 const serviceSpans = ref([])
 const isOpen = ref(false)
+const { t } = useTranslations()
 
 const isMobile = () => window.matchMedia('(max-width: 767px)').matches
 function toggleMobile() {
@@ -54,25 +54,23 @@ function toggleMobile() {
   isOpen.value = !isOpen.value
 }
 
-/* ───────────── ONE NUMBER AT A TIME ───────────── */
 function setupScrollWatcher() {
-const handleScroll = () => {
-  if (!serviceSpans.value.length) return
-  const triggerLine = window.innerHeight * 0.8
+  const handleScroll = () => {
+    if (!serviceSpans.value.length) return
+    const triggerLine = window.innerHeight * 0.8
 
-  let active = null
-  serviceSpans.value.forEach(span => {
-    if (!span) return
-    const rect = span.getBoundingClientRect()
-    const inView = rect.top < triggerLine && rect.bottom > triggerLine
-    if (inView && !active) active = span
-  })
+    let active = null
+    serviceSpans.value.forEach(span => {
+      if (!span) return
+      const rect = span.getBoundingClientRect()
+      const inView = rect.top < triggerLine && rect.bottom > triggerLine
+      if (inView && !active) active = span
+    })
 
-  serviceSpans.value.forEach(span => {
-    span.classList.toggle('active', span === active)
-  })
-}
-
+    serviceSpans.value.forEach(span => {
+      span.classList.toggle('active', span === active)
+    })
+  }
 
   handleScroll()
   window.addEventListener('scroll', handleScroll, { passive: true })
@@ -84,7 +82,6 @@ const handleScroll = () => {
   })
 }
 
-/* ───────────── INIT ───────────── */
 watch(
   () => store.state.infoData,
   async data => {
@@ -103,7 +100,6 @@ onMounted(async () => {
   }
 })
 
-/* ───────────── RICH TEXT ───────────── */
 function renderRichText(blocks) {
   if (!blocks) return ''
   if (typeof blocks === 'string') {
@@ -126,7 +122,6 @@ h1 {
   line-height: 0.9;
 }
 
-/* ─────────── DESKTOP ─────────── */
 ul[services] {
   flex-direction: column;
 }
@@ -188,7 +183,6 @@ ul[services].services-details > li:nth-child(2) ul > li {
   grid-template-columns: 0.15fr 1fr;
 }
 
-/* ─────────── MOBILE ─────────── */
 @media only screen and (max-width: 767px) {
   [services] > li > h1 {
     font-size: var(--font-medium);
@@ -214,12 +208,10 @@ ul[services].services-details > li:nth-child(2) ul > li {
     font-size: 18em;
   }
 
-  /* Hide both when closed */
   ul[services]:not([data-open='true']) > li:not(:first-child) {
     display: none;
   }
 
-  /* Same hide rule applies to second UL */
   ul[services].services-details:not([data-open='true']) {
     display: none;
   }

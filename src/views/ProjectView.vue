@@ -18,7 +18,7 @@
           <img
             v-if="isImage(mediaItem.mime)"
             :src="fullUrl(mediaItem.url)"
-            :alt="mediaItem.name || `Gallery item ${index + 1}`"
+            :alt="mediaItem.name || `${fallbackGalleryLabel} ${index + 1}`"
           />
           <video
             v-else-if="isVideo(mediaItem.mime)"
@@ -43,13 +43,13 @@
       </div>
 
       <div class="is-nav">
-        <button @click="goHome">Accueil</button>
-        <button @click="goToNextProject">Suivant</button>
+        <button @click="goHome">{{ t('project.buttons.home') }}</button>
+        <button @click="goToNextProject">{{ t('project.buttons.next') }}</button>
       </div>
     </div>
   </div>
   <div v-else>
-    <p>Loading project...</p>
+    <p>{{ t('project.loading') }}</p>
   </div>
 </template>
 <script setup>
@@ -57,10 +57,13 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import api from '@/api'
+import { useTranslations } from '@/translation'
 
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
+const { t } = useTranslations()
+const fallbackGalleryLabel = computed(() => t('project.galleryFallback'))
 
 const STRAPI_URL = 'https://active-horse-14e6153647.strapiapp.com'
 const galleryMedia = ref([])
@@ -134,7 +137,8 @@ async function fetchGalleryItems() {
 
     if (!hasUrls) {
       project = await api.getProject(
-        currentProject.value.documentId || currentProject.value.id
+        currentProject.value.documentId || currentProject.value.id,
+        store.state.locale
       )
     }
 

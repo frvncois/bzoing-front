@@ -1,9 +1,15 @@
 <template>
-    <div home>
-        <h2>Studio</h2>
-        <h2>Montréalais</h2>
-    </div>
+  <div home>
+    <h2>{{ t('home.sticky.lineOne') }}</h2>
+    <h2>{{ t('home.sticky.lineTwo') }}</h2>
+  </div>
 </template>
+
+<script setup>
+import { useTranslations } from '@/translation';
+
+const { t } = useTranslations();
+</script>
 
 <style scoped>
 div {
@@ -18,5 +24,6 @@ div {
     gap: var(--space-xsmall);
     z-index: 0;
     pointer-events: none;
+    
 }
 </style>

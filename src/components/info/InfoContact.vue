@@ -1,38 +1,53 @@
 <template>
   <ul ref="contactRef">
     <li>
-      <h2 @click="toggleMobile">Contact</h2>
+      <h2 @click="toggleMobile">{{ contactText.title }}</h2>
     </li>
     <li>
       <div>
-        <h3>Adresse</h3>
-        <p>4641 Av.Papineau<br />Montréal, QC H2H 1V4</p>
+        <h3>{{ contactText.addressLabel }}</h3>
+        <p>
+          <template v-for="(line, index) in contactText.addressLines" :key="`address-${index}`">
+            <span>{{ line }}</span>
+            <br v-if="index < contactText.addressLines.length - 1" />
+          </template>
+        </p>
       </div>
       <div>
-        <h4>Téléphone</h4>
-        <a href="tel:5148307833">514 830-7833</a>
+        <h4>{{ contactText.phoneLabel }}</h4>
+        <a :href="footerCopy.phoneHref">{{ contactText.phoneNumber }}</a>
       </div>
     </li>
     <li>
-      <h3>Demande d'information<br />& emploi</h3>
-      <a href="mailto:info@bzoing.ca">info@bzoing.ca</a>
+      <h3>{{ contactText.inquiryTitle }}</h3>
+      <a :href="footerCopy.emailHref">{{ contactText.email }}</a>
     </li>
     <li class="desktop">
-      <h3>Social</h3>
+      <h3>{{ contactText.socialTitle }}</h3>
       <div>
-        <a href="https://instagram.com/bzoingmtl" target="_blank">Instagram</a>
-        <a href="https://www.behance.net/bzoing" target="_blank">Behance</a>
+        <a :href="contactText.socialLinks.instagram" target="_blank" rel="noopener">
+          {{ footerCopy.social?.instagram }}
+        </a>
+        <a :href="contactText.socialLinks.behance" target="_blank" rel="noopener">
+          {{ footerCopy.social?.behance }}
+        </a>
       </div>
     </li>
   </ul>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useTranslations } from '@/translation'
 
 const contactRef = ref(null)
 
-/* only toggles visibility on mobile — never affects desktop grid */
+const { dictionary } = useTranslations()
+const contactText = computed(
+  () => dictionary.value?.info?.contact || { addressLines: [], socialLinks: {}, phoneNumber: '', email: '' }
+)
+const footerCopy = computed(() => dictionary.value?.global?.footer || {})
+
 function toggleMobile() {
   if (window.matchMedia('(max-width: 767px)').matches && contactRef.value) {
     const el = contactRef.value
@@ -72,7 +87,6 @@ ul h3 {
   text-transform: uppercase;
 }
 
-/* ─────────────── MOBILE ─────────────── */
 @media only screen and (max-width: 767px) {
   ul {
     display: grid;
@@ -81,7 +95,6 @@ ul h3 {
     transition: margin-bottom 0.2s ease;
   }
 
-  /* add margin only when open */
   ul[data-open='true'] {
     margin-bottom: var(--space-normal);
   }

@@ -1,12 +1,10 @@
 <template>
   <div recreation>
-    <!-- Lotties -->
     <div class="full draggable lottie1" ref="lottie1"></div>
     <div class="full draggable lottie2" ref="lottie2"></div>
     <div class="lottie-item draggable lottie3" ref="lottie3"></div>
     <div class="lottie-item draggable lottie4" ref="lottie4"></div>
 
-    <!-- Images -->
     <div class="draggable socks">
       <img src="@/assets/socks.svg" alt="socks" />
     </div>
@@ -129,7 +127,6 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
-/* Generic draggable */
 .draggable {
   position: absolute;
   cursor: grab;
@@ -167,7 +164,6 @@ svg {
   height: 20vw;
 }
 
-/* ────────── Element positions ────────── */
 .lottie1 {
   top: 5em;
   left: 0%;

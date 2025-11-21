@@ -222,7 +222,7 @@ video {
   justify-content: space-between;
   column-gap: var(--space-normal);
   font-size: var(--font-medium);
-  margin-top: 100vh;
+  padding-top: 51vh;
   > li {
     display: flex;
     flex-direction: row;
@@ -586,7 +586,6 @@ video {
   }
 } 
 
-/* RESPONSIVE */
 @media only screen and (max-width: 767px) {
 
   body {

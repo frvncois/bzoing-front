@@ -1,38 +1,39 @@
 <template>
   <ul>
-    <!-- ÉQUIPE -->
     <li :data-open="isEquipeOpen">
-      <h2 @click="toggleEquipe">Équipe</h2>
+      <h2 @click="toggleEquipe">{{ teamCopy.title }}</h2>
       <ul>
         <li>
-          <h3>(A) Stratégie</h3>
+          <h3>{{ teamCopy.strategyLabel }}</h3>
           <p v-html="renderRichText(store.state.infoData?.infoStrategie)" />
         </li>
         <li>
-          <h3>(B) Création</h3>
+          <h3>{{ teamCopy.creationLabel }}</h3>
           <p v-html="renderRichText(store.state.infoData?.infoCreation)" />
         </li>
       </ul>
     </li>
 
-    <!-- APPROCHE -->
     <li :data-open="isApprocheOpen">
-      <h2 @click="toggleApproche">Approche</h2>
+      <h2 @click="toggleApproche">{{ teamCopy.approachTitle }}</h2>
       <div class="spacer"></div>
-      <div><span>(1)</span><h3>S'amuser</h3></div>
-      <div><span>(2)</span><h3>Analyse de la réalité de la marque</h3></div>
-      <div><span>(3)</span><h3>Réflexion stratégique</h3></div>
-      <div><span>(4)</span><h3>Intention de création</h3></div>
-      <div><span>(5)</span><h3>Création des idées</h3></div>
+      <div v-for="(step, index) in approachSteps" :key="`approach-${index}`">
+        <span>({{ index + 1 }})</span>
+        <h3>{{ step }}</h3>
+      </div>
     </li>
   </ul>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useStore } from '@/store'
+import { useTranslations } from '@/translation'
 
 const store = useStore()
+const { dictionary } = useTranslations()
+const teamCopy = computed(() => dictionary.value?.info?.team || { approachSteps: [] })
+const approachSteps = computed(() => teamCopy.value.approachSteps || [])
 
 const isEquipeOpen = ref(false)
 const isApprocheOpen = ref(false)
@@ -69,7 +70,6 @@ function renderRichText(blocks) {
 </script>
 
 <style scoped>
-/* ─────────── DESKTOP (unchanged) ─────────── */
 ul {
   display: flex;
   gap: var(--space-normal);
@@ -91,7 +91,7 @@ ul > li > div {
 }
 ul > li > ul {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* desktop: 3 cols */
+  grid-template-columns: 1fr 1fr 1fr;
   grid-column: span 3;
   margin-top: unset;
   gap: var(--space-normal);
@@ -109,7 +109,6 @@ ul h3 {
   text-transform: uppercase;
 }
 
-/* ─────────── MOBILE (toggle only; keep 2 columns for ÉQUIPE inner UL) ─────────── */
 @media only screen and (max-width: 767px) {
   ul {
     display: flex;
@@ -118,7 +117,6 @@ ul h3 {
     gap: 0;
   }
 
-  /* each section wrapper; add margin only when open */
   ul > li {
     display: block;
     transition: margin-bottom 0.2s ease;
@@ -128,30 +126,25 @@ ul h3 {
     gap: var(--space-small);
   }
 
-  /* title/toggle */
   ul h2 {
     font-size: var(--font-normal);
     cursor: pointer;
     position: relative;
     margin-bottom: 0;
   }
-  /* keep APPROCHE rows grid as-is */
   ul > li > div {
     display: grid;
     grid-template-columns: 0.1fr 1fr;
     gap: var(--space-xsmall);
   }
 
-  /* 🔥 ÉQUIPE inner UL MUST be TWO columns on mobile when visible */
   ul > li > ul {
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important; /* force 2 columns */
+    grid-template-columns: 1fr 1fr !important;
     gap: var(--space-normal);
     margin-top: var(--space-small);
   }
 
-  /* 🚫 Reset the desktop-span rule that was breaking the 2-col layout */
-  /* (desktop had: ul > li:first-child li:first-child { grid-column: span 2; }) */
   ul > li:first-child > ul > li:first-child {
     grid-column: auto !important;
   }
@@ -159,7 +152,6 @@ ul h3 {
     height: var(--space-small);
   }
 
-  /* hide content until section is opened (does not alter its grid when open) */
   li:not([data-open='true']) > ul,
   li:not([data-open='true']) > div {
     display: none !important;

@@ -28,13 +28,12 @@ const router = useRouter()
 const store = useStore()
 const activeProject = ref(null)
 
-// Sort projects by year descending
 const sortedProjects = computed(() => {
   if (!store.state.projects) return []
   return [...store.state.projects].sort((a, b) => {
     const yearA = parseInt(a.projectYear, 10) || 0
     const yearB = parseInt(b.projectYear, 10) || 0
-    return yearB - yearA // descending
+    return yearB - yearA
   })
 })
 
@@ -59,8 +58,3 @@ function navigateToProject(project) {
 }
 </script>
 
-<style scoped>
-h1, span {
-  line-height: 0.95;
-}
-</style>

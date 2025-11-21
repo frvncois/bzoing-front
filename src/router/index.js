@@ -38,15 +38,12 @@ const router = createRouter({
   scrollBehavior(to, from) {
     if (window.lenis) {
       if (to.hash) {
-        // First scroll to top immediately to reset position
         window.lenis.scrollTo(0, { immediate: true })
 
-        // Wait for DOM to be ready, then scroll to hash element
         return new Promise((resolve) => {
           const scrollToElement = () => {
             const element = document.querySelector(to.hash)
             if (element) {
-              // Force Lenis to update
               window.lenis.resize()
 
               setTimeout(() => {
@@ -65,7 +62,6 @@ const offset = windowHeight * 0.0
           setTimeout(scrollToElement, 200)
         })
       } else {
-        // No hash, instantly jump to top
         window.lenis.scrollTo(0, { immediate: true })
       }
     }
