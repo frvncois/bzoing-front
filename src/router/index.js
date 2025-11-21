@@ -61,10 +61,16 @@ const offset = windowHeight * 0.0
           }
           setTimeout(scrollToElement, 200)
         })
-      } else {
-        window.lenis.scrollTo(0, { immediate: true })
       }
+
+      window.lenis.scrollTo(0, {
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      })
+      return
     }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 })
 

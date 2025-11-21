@@ -286,7 +286,7 @@ video {
     position: relative;
     > h1 {
       font-size: var(--font-large);
-      max-width: 10ch;
+      max-width: 9ch;
     }
     > h2 {
       font-size: var(--font-medium);

@@ -18,6 +18,11 @@ const normalizeLocale = (locale) =>
     ? locale.slice(0, 2).toLowerCase()
     : null
 
+const getArchiveLocale = (locale) => {
+  const normalized = normalizeLocale(locale) || 'en'
+  return normalized === 'fr' ? 'en' : normalized
+}
+
 const updateDocumentLanguage = (locale) => {
   if (typeof document !== 'undefined' && locale) {
     document.documentElement.lang = locale
@@ -62,9 +67,10 @@ const actions = {
     const requestId = ++fetchVersion
 
     try {
+      const archiveLocale = getArchiveLocale(locale)
       const [projects, archive, home, info] = await Promise.allSettled([
         api.getProjects(locale),
-        api.getArchive(locale),
+        api.getArchive(archiveLocale),
         api.getHome(locale),
         api.getInfo(locale),
       ])
@@ -78,7 +84,9 @@ const actions = {
 
       if (archive.status === 'fulfilled') {
         state.archiveData = archive.value.data || archive.value
-        applyLocaleFromPayload(state.archiveData)
+        if (archiveLocale === state.locale) {
+          applyLocaleFromPayload(state.archiveData)
+        }
       } else console.warn('Archive failed:', archive.reason)
 
       if (home.status === 'fulfilled') {
@@ -123,9 +131,12 @@ const actions = {
 
   async fetchArchive(locale = state.locale) {
     try {
-      const res = await api.getArchive(locale)
+      const archiveLocale = getArchiveLocale(locale)
+      const res = await api.getArchive(archiveLocale)
       state.archiveData = res.data || res
-      applyLocaleFromPayload(state.archiveData)
+      if (archiveLocale === state.locale) {
+        applyLocaleFromPayload(state.archiveData)
+      }
     } catch (error) {
       state.error = error.message
     }

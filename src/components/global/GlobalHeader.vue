@@ -2,9 +2,13 @@
   <header>
     <h1>
       <RouterLink to="/">{{ t('global.siteName') }}</RouterLink>
-      <RouterLink to="/" @click.prevent="handleLanguageToggle">
+      <button
+        type="button"
+        class="language-toggle"
+        @click="handleLanguageToggle"
+      >
         {{ t('global.languageToggle') }}
-      </RouterLink>
+      </button>
     </h1>
 
     <nav>

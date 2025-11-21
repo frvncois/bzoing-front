@@ -68,7 +68,7 @@ export const translations = {
       },
       team: {
         title: 'Équipe',
-        strategyLabel: '(A) Stratégie',
+        strategyLabel: '(A) Admin',
         creationLabel: '(B) Création',
         approachTitle: 'Approche',
         approachSteps: [
@@ -112,18 +112,18 @@ export const translations = {
       nav: {
         projects: 'Projects',
         archives: 'Archive',
-        recreation: 'Recreation',
+        recreation: 'Recess',
         info: 'Info',
       },
       footer: {
         ...sharedFooter,
-        addressLines: ['4641 Av.Papineau', 'Montreal, QC, H2H 1V4'],
+        addressLines: ['4641 papineau av.', 'Montreal, QC, H2H 1V4'],
       },
     },
     home: {
       sticky: {
-        lineOne: 'Studio',
-        lineTwo: 'Montreal-based',
+        lineOne: 'Montreal',
+        lineTwo: 'Studio',
       },
     },
     info: {
@@ -134,7 +134,7 @@ export const translations = {
         inquiryTitle: 'Information & jobs',
         socialTitle: 'Social',
         ...sharedContactDetails,
-        addressLines: ['4641 Av.Papineau', 'Montreal, QC H2H 1V4'],
+        addressLines: ['4641 papineau av.', 'Montreal, QC H2H 1V4'],
       },
       clients: {
         title: 'Name drop',
@@ -143,15 +143,15 @@ export const translations = {
       },
       team: {
         title: 'Team',
-        strategyLabel: '(A) Strategy',
+        strategyLabel: '(A) Admin',
         creationLabel: '(B) Creation',
-        approachTitle: 'Approach',
+        approachTitle: 'Process',
         approachSteps: [
           'Have fun',
-          'Analyze the brand reality',
-          'Strategic reflection',
+          'Analyzing brand ecosystem',
+          'Strategic approach',
           'Creative intent',
-          'Idea creation',
+          'Ideation and concept development ',
         ],
       },
       services: {
