@@ -33,7 +33,12 @@ const sortedProjects = computed(() => {
   return [...store.state.projects].sort((a, b) => {
     const yearA = parseInt(a.projectYear, 10) || 0
     const yearB = parseInt(b.projectYear, 10) || 0
-    return yearB - yearA
+    if (yearA !== yearB) {
+      return yearB - yearA
+    }
+    const titleA = (a.projectTitle || '').toLowerCase()
+    const titleB = (b.projectTitle || '').toLowerCase()
+    return titleA.localeCompare(titleB)
   })
 })
 

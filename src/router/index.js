@@ -37,6 +37,14 @@ const router = createRouter({
   ],
   scrollBehavior(to, from) {
     if (window.lenis) {
+      if (to.hash === '#projects') {
+        const windowHeight = window.visualViewport?.height || window.innerHeight
+        const isMobile = window.innerWidth < 768
+        const scrollTo = windowHeight * (isMobile ? 0.70 : 0.59)
+        window.lenis.scrollTo(scrollTo, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+        return
+      }
+
       if (to.hash) {
         window.lenis.scrollTo(0, { immediate: true })
 
@@ -48,8 +56,8 @@ const router = createRouter({
 
               setTimeout(() => {
                 const elementTop = element.offsetTop
-const windowHeight = window.visualViewport?.height || window.innerHeight
-const offset = windowHeight * 0.0
+                const windowHeight = window.visualViewport?.height || window.innerHeight
+                const offset = windowHeight * 0.5
 
                 const scrollTo = elementTop - offset
                 window.lenis.scrollTo(scrollTo, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })

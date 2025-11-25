@@ -106,10 +106,9 @@ header {
     justify-content: space-between;
     & button {
     font-size: 1em;
+      padding-right: var(--space-normal);
   }
-    > a {
-      padding-right: var(--space-large);
-    }
+
   }
   > button {
     display: none;
@@ -225,7 +224,8 @@ video {
   justify-content: space-between;
   column-gap: var(--space-normal);
   font-size: var(--font-medium);
-  padding-top: 51vh;
+  line-height: 0.95;
+  padding-top: 100vh;
   > li {
     display: flex;
     flex-direction: row;
@@ -243,6 +243,7 @@ video {
     }
     > h1 {
       flex: 1;
+  line-height: 0.95;
     }
     > div {
       flex: 1;
@@ -669,7 +670,7 @@ video {
   }
   [projects] {
   font-size: var(--font-normal);
-  padding-top: 52vh;
+  padding-top: 100vh;
     > li {
       > div {
         display: none;
