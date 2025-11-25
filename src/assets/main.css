@@ -104,6 +104,9 @@ header {
     flex: 1;
     display: flex;
     justify-content: space-between;
+    & button {
+    font-size: 1em;
+  }
     > a {
       padding-right: var(--space-large);
     }
@@ -605,14 +608,14 @@ video {
     >  nav {
         display: none;
       }
-      & h1 a:last-child {
-        display: none;
-      }
     > button {
       display: block;
       font-size: var(--font-base);
       text-transform: uppercase;
     }
+    .language-toggle {
+        display: none;
+      }
 
   }
 
