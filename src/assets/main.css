@@ -225,7 +225,7 @@ video {
   column-gap: var(--space-normal);
   font-size: var(--font-medium);
   line-height: 0.95;
-  padding-top: 100vh;
+  padding-top: 100svh;
   > li {
     display: flex;
     flex-direction: row;
@@ -670,7 +670,7 @@ video {
   }
   [projects] {
   font-size: var(--font-normal);
-  padding-top: 100vh;
+  padding-top: 100svh;
     > li {
       > div {
         display: none;
