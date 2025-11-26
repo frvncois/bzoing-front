@@ -11,7 +11,15 @@
 
       <ul :class="currentProject.projectLayout">
         <li v-if="coverUrl">
-          <img :src="coverUrl" :alt="currentProject.projectTitle" />
+          <video
+            v-if="isCoverVideo"
+            muted
+            autoplay
+            loop
+            playsinline
+            :src="coverUrl"
+          ></video>
+          <img v-else :src="coverUrl" :alt="currentProject.projectTitle" />
         </li>
 
         <li v-for="(mediaItem, index) in galleryMedia" :key="index">
@@ -126,6 +134,13 @@ const coverUrl = computed(() => {
   const cover = currentProject.value?.projectCover
   if (!cover) return ''
   return fullUrl(cover.url || cover.data?.attributes?.url)
+})
+
+const isCoverVideo = computed(() => {
+  const cover = currentProject.value?.projectCover
+  if (!cover) return false
+  const mime = cover.mime || cover.data?.attributes?.mime || ''
+  return isVideo(mime)
 })
 
 async function fetchGalleryItems() {

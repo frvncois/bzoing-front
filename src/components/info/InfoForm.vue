@@ -4,49 +4,56 @@
       <h2 @click="toggleMobile">{{ formCopy.title }}</h2>
     </div>
 
-    <form>
+    <form @submit.prevent="handleSubmit">
       <ul>
         <li>
-          <input type="text" id="name" name="name" :placeholder="formCopy.fields.name" required />
+          <input v-model="form.name" type="text" id="name" name="name" :placeholder="formCopy.fields.name" required :disabled="isSubmitting" />
         </li>
         <li>
           <input
+            v-model="form.company"
             type="text"
             id="entreprise"
             name="entreprise"
             :placeholder="formCopy.fields.company"
-            required
+            :disabled="isSubmitting"
           />
         </li>
         <li>
           <input
+            v-model="form.phone"
             type="tel"
             id="telephone"
             name="telephone"
             :placeholder="formCopy.fields.phone"
-            required
+            :disabled="isSubmitting"
           />
         </li>
         <li>
           <input
+            v-model="form.email"
             type="email"
             id="email"
             name="email"
             :placeholder="formCopy.fields.email"
             required
+            :disabled="isSubmitting"
           />
         </li>
       </ul>
 
       <ul>
         <li>
-          <input type="text" id="sujet" name="sujet" :placeholder="formCopy.fields.subject" required />
+          <input v-model="form.subject" type="text" id="sujet" name="sujet" :placeholder="formCopy.fields.subject" required :disabled="isSubmitting" />
         </li>
         <li>
-          <textarea id="message" name="message" :placeholder="formCopy.fields.message" required></textarea>
+          <textarea v-model="form.message" id="message" name="message" :placeholder="formCopy.fields.message" required :disabled="isSubmitting"></textarea>
         </li>
         <li>
-          <button type="submit">{{ formCopy.submit }}</button>
+          <span v-if="statusMessage" :class="['status-message', statusType]">{{ statusMessage }}</span>
+          <button type="submit" :disabled="isSubmitting">
+            {{ isSubmitting ? formCopy.sending || 'Envoi...' : formCopy.submit }}
+          </button>
         </li>
       </ul>
     </form>
@@ -54,17 +61,56 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { useTranslations } from '@/translation'
 
 const { dictionary } = useTranslations()
 const formCopy = computed(() => dictionary.value?.info?.form || { fields: {} })
 const isOpen = ref(false)
+const isSubmitting = ref(false)
+const statusMessage = ref('')
+const statusType = ref('')
+
+const form = reactive({
+  name: '',
+  company: '',
+  phone: '',
+  email: '',
+  subject: '',
+  message: ''
+})
+
 const isMobile = () => window.matchMedia('(max-width: 767px)').matches
 function toggleMobile() {
   if (isMobile()) isOpen.value = !isOpen.value
 }
 
+async function handleSubmit() {
+  isSubmitting.value = true
+  statusMessage.value = ''
+
+  try {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form)
+    })
+
+    if (response.ok) {
+      statusMessage.value = formCopy.value.success || 'Message envoyé!'
+      statusType.value = 'success'
+      Object.keys(form).forEach(key => form[key] = '')
+    } else {
+      statusMessage.value = formCopy.value.error || 'Erreur lors de l\'envoi'
+      statusType.value = 'error'
+    }
+  } catch {
+    statusMessage.value = formCopy.value.error || 'Erreur lors de l\'envoi'
+    statusType.value = 'error'
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
 
 <style scoped>
@@ -118,6 +164,29 @@ button {
   font-family: "body";
   white-space: nowrap;
   margin-left: auto;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input:disabled,
+textarea:disabled {
+  opacity: 0.6;
+}
+
+.status-message {
+  font-size: var(--font-small, 0.875rem);
+  margin-right: 1rem;
+}
+
+.status-message.success {
+  color: #22c55e;
+}
+
+.status-message.error {
+  color: #ef4444;
 }
 
 input::placeholder,

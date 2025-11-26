@@ -111,9 +111,9 @@ export const translations = {
       menuLabel: 'menu',
       nav: {
         projects: 'Projects',
-        archives: 'Archive',
+        archives: 'Archives',
         recreation: 'Recess',
-        info: 'Info',
+        info: 'Infos',
       },
       footer: {
         ...sharedFooter,
