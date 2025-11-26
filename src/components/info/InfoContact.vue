@@ -14,7 +14,7 @@
         </p>
       </div>
       <div>
-        <h4>{{ contactText.phoneLabel }}</h4>
+        <h3>{{ contactText.phoneLabel }}</h3>
         <a :href="footerCopy.phoneHref">{{ contactText.phoneNumber }}</a>
       </div>
     </li>
