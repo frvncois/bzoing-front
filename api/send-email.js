@@ -67,7 +67,7 @@ export default async function handler(req, res) {
   })
 
   const mailOptions = {
-    from: `"${safeName}" <${process.env.BREVO_LOGIN}>`,
+    from: '"Bzoing Contact" <info@bzoing.ca>',
     to: 'info@bzoing.ca',
     replyTo: safeEmail,
     subject: `[Bzoing Contact] ${safeSubject}`,
