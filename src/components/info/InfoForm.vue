@@ -167,13 +167,13 @@ button {
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 1;
   cursor: not-allowed;
 }
 
 input:disabled,
 textarea:disabled {
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .status-message {
