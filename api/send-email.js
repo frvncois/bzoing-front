@@ -27,7 +27,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { name, company, phone, email, subject, message } = req.body
+  // Check environment variables
+  if (!process.env.BREVO_SMTP || !process.env.BREVO_PORT || !process.env.BREVO_LOGIN || !process.env.BREVO_SMTP_KEY) {
+    console.error('Missing environment variables:', {
+      BREVO_SMTP: !!process.env.BREVO_SMTP,
+      BREVO_PORT: !!process.env.BREVO_PORT,
+      BREVO_LOGIN: !!process.env.BREVO_LOGIN,
+      BREVO_SMTP_KEY: !!process.env.BREVO_SMTP_KEY,
+    })
+    return res.status(500).json({ error: 'Server configuration error' })
+  }
+
+  const { name, company, phone, email, subject, message } = req.body || {}
 
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ error: 'Missing required fields' })
@@ -51,7 +62,7 @@ export default async function handler(req, res) {
     secure: false,
     auth: {
       user: process.env.BREVO_LOGIN,
-      pass: process.env.BREVO_API_TOKEN,
+      pass: process.env.BREVO_SMTP_KEY,
     },
   })
 
