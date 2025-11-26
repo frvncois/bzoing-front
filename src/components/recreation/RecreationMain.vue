@@ -197,8 +197,8 @@ svg {
 }
 
 .cube {
-  top: 20%;
-  left: 50%;
+  top: 12%;
+  left: 45%;
 }
 
 @media only screen and (max-width: 767px) {
