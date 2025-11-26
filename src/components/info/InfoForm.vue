@@ -51,8 +51,8 @@
         </li>
         <li>
           <span v-if="statusMessage" :class="['status-message', statusType]">{{ statusMessage }}</span>
-          <button type="submit" :disabled="isSubmitting">
-            {{ isSubmitting ? formCopy.sending || 'Envoi...' : formCopy.submit }}
+          <button type="submit" :disabled="isSubmitting || isSent">
+            {{ isSent ? formCopy.received || 'Bien reçu' : isSubmitting ? formCopy.sending || 'Envoi...' : formCopy.submit }}
           </button>
         </li>
       </ul>
@@ -68,6 +68,7 @@ const { dictionary } = useTranslations()
 const formCopy = computed(() => dictionary.value?.info?.form || { fields: {} })
 const isOpen = ref(false)
 const isSubmitting = ref(false)
+const isSent = ref(false)
 const statusMessage = ref('')
 const statusType = ref('')
 
@@ -97,8 +98,7 @@ async function handleSubmit() {
     })
 
     if (response.ok) {
-      statusMessage.value = formCopy.value.success || 'Message envoyé!'
-      statusType.value = 'success'
+      isSent.value = true
       Object.keys(form).forEach(key => form[key] = '')
     } else {
       statusMessage.value = formCopy.value.error || 'Erreur lors de l\'envoi'
