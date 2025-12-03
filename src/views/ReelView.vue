@@ -3,9 +3,9 @@
     <!-- Mobile (vertical) -->
     <div class="reel-mobile">
       <iframe
-        src="https://player.vimeo.com/video/1143227733?badge=0&autopause=0&player_id=0&app_id=58479"
+        src="https://player.vimeo.com/video/1143227733?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&sidedock=0&controls=0&like=0&share=0&watchlater=0&autoplay=1&muted=1&loop=1&background=1"
         frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
         referrerpolicy="strict-origin-when-cross-origin"
         title="reel-vertical"
       />
@@ -13,9 +13,9 @@
     <!-- Desktop (horizontal) -->
     <div class="reel-desktop">
       <iframe
-        src="https://player.vimeo.com/video/1143227497?badge=0&autopause=0&player_id=0&app_id=58479"
+        src="https://player.vimeo.com/video/1143227497?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&sidedock=0&controls=0&like=0&share=0&watchlater=0&autoplay=1&muted=1&loop=1&background=1"
         frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
         referrerpolicy="strict-origin-when-cross-origin"
         title="reel-horizontal"
       />
@@ -30,31 +30,32 @@
   width: 100vw;
   height: 100vh;
   background: #000;
-}
-
-.reel-mobile,
-.reel-desktop {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index:9;
 }
 
 .reel-mobile {
-  padding-top: 177.78%; /* 9:16 aspect ratio */
+  width: 100%;
+  height: 100%;
+  max-width: calc(100vh * 9 / 16);
+  max-height: 100vh;
 }
 
 .reel-desktop {
-  padding-top: 56.25%; /* 16:9 aspect ratio */
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: calc(100vw * 9 / 16);
   display: none;
 }
 
 .reel-mobile iframe,
 .reel-desktop iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  border: none;
 }
 
 /* Show desktop version on larger screens */
@@ -64,7 +65,7 @@
   }
 
   .reel-desktop {
-    display: block;
+    display: flex;
   }
 }
 </style>
