@@ -4,6 +4,7 @@ import ArchiveView from '../views/ArchiveView.vue'
 import RecreationView from '../views/RecreationView.vue'
 import InfoView from '../views/InfoView.vue'
 import ProjectView from '../views/ProjectView.vue'
+import ReelView from '../views/ReelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
       name: 'Project',
       component: ProjectView,
       props: true
+    },
+    {
+      path: '/reel',
+      name: 'Reel',
+      component: ReelView,
     }
   ],
   scrollBehavior(to, from) {
