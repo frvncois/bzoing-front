@@ -25,11 +25,7 @@
 
 <style scoped>
 .reel {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,17 +33,13 @@
 }
 
 .reel-mobile {
-  width: 100%;
-  height: 100%;
-  max-width: calc(100vh * 9 / 16);
-  max-height: 100vh;
+  width: min(100vw, calc(100vh * 9 / 16));
+  height: min(100vh, calc(100vw * 16 / 9));
 }
 
 .reel-desktop {
-  width: 100%;
-  height: 100%;
-  max-width: 100vw;
-  max-height: calc(100vw * 9 / 16);
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
   display: none;
 }
 
