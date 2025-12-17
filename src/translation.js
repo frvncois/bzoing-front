@@ -38,7 +38,7 @@ export const translations = {
         projects: 'Projets',
         archives: 'Archives',
         recreation: 'Récréation',
-        info: 'Infos',
+        info: 'Info',
       },
       footer: {
         ...sharedFooter,
@@ -113,7 +113,7 @@ export const translations = {
         projects: 'Projects',
         archives: 'Archives',
         recreation: 'Recess',
-        info: 'Infos',
+        info: 'Info',
       },
       footer: {
         ...sharedFooter,
