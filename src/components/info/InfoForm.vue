@@ -156,7 +156,7 @@ textarea {
 }
 
 textarea {
-  height: 140px;
+  height: 2em;
 }
 
 button {

@@ -10,7 +10,7 @@ const socialLinks = {
 
 const sharedFooter = {
   copyright: '© Bzoing',
-  year: '2025',
+  year: '2026',
   emailParts: ['info', '@', 'bzoing.ca'],
   phoneParts: ['514', '830-7833'],
   emailHref: 'mailto:info@bzoing.ca',
@@ -42,7 +42,7 @@ export const translations = {
       },
       footer: {
         ...sharedFooter,
-        addressLines: ['4641 Av.Papineau', 'Montréal, QC, H2H 1V4'],
+        addressLines: ['4641 Av. Papineau', 'Montréal, QC, H2H 1V4'],
       },
     },
     home: {
@@ -59,7 +59,7 @@ export const translations = {
         inquiryTitle: "Demande d'information & emploi",
         socialTitle: 'Social',
         ...sharedContactDetails,
-        addressLines: ['4641 Av.Papineau', 'Montréal, QC H2H 1V4'],
+        addressLines: ['4641 Av. Papineau', 'Montréal, QC H2H 1V4'],
       },
       clients: {
         title: 'Name drop',
