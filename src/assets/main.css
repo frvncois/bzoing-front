@@ -377,6 +377,8 @@ video {
       flex: 0.5;
       > h1:first-child {
         flex: 0.75;
+        line-height: 0.85;
+        padding-top: 0.125em;
       }
       > h1:last-child {
         text-align: right;
