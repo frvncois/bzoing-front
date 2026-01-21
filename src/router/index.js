@@ -13,32 +13,54 @@ const router = createRouter({
       path: '/',
       name: 'Projets',
       component: HomeView,
+      meta: {
+        title: 'Projets',
+        description: 'Studio de création graphique montréalais.'
+      }
     },
     {
       path: '/archive',
       name: 'Archive',
       component: ArchiveView,
+      meta: {
+        title: 'Archive',
+        description: 'Une sélection de beaux moments et de projets à travers les années.'
+      }
     },
     {
       path: '/recreation',
       name: 'Recreation',
       component: RecreationView,
+      meta: {
+        title: 'Récréation',
+        description: 'Expérimentations graphiques en roue libre. :)'
+      }
     },
     {
       path: '/info',
       name: 'Info',
       component: InfoView,
+      meta: {
+        title: 'Info & Contact',
+        description: 'Découvrez notre équipe et notre approche.'
+      }
     },
     {
       path: '/project/:title',
       name: 'Project',
       component: ProjectView,
-      props: true
+      props: true,
+      meta: {
+        title: 'Projet',
+      }
     },
     {
       path: '/reel',
       name: 'Reel',
       component: ReelView,
+      meta: {
+        title: 'Reel',
+      }
     }
   ],
   scrollBehavior(to, from) {
@@ -85,6 +107,66 @@ const router = createRouter({
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+})
+
+// Update document title and meta tags on route change
+router.afterEach((to) => {
+  // Update document title
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+
+  // Update meta description
+  if (to.meta.description) {
+    let metaDescription = document.querySelector('meta[name="description"]')
+    if (metaDescription) {
+      metaDescription.setAttribute('content', to.meta.description)
+    }
+
+    // Update OG description
+    let ogDescription = document.querySelector('meta[property="og:description"]')
+    if (ogDescription) {
+      ogDescription.setAttribute('content', to.meta.description)
+    }
+
+    // Update Twitter description
+    let twitterDescription = document.querySelector('meta[property="twitter:description"]')
+    if (twitterDescription) {
+      twitterDescription.setAttribute('content', to.meta.description)
+    }
+  }
+
+  // Update OG title
+  if (to.meta.title) {
+    let ogTitle = document.querySelector('meta[property="og:title"]')
+    if (ogTitle) {
+      ogTitle.setAttribute('content', to.meta.title)
+    }
+
+    // Update Twitter title
+    let twitterTitle = document.querySelector('meta[property="twitter:title"]')
+    if (twitterTitle) {
+      twitterTitle.setAttribute('content', to.meta.title)
+    }
+  }
+
+  // Update canonical URL
+  let canonical = document.querySelector('link[rel="canonical"]')
+  if (canonical) {
+    canonical.setAttribute('href', `https://bzoing.ca${to.path}`)
+  }
+
+  // Update OG URL
+  let ogUrl = document.querySelector('meta[property="og:url"]')
+  if (ogUrl) {
+    ogUrl.setAttribute('href', `https://bzoing.ca${to.path}`)
+  }
+
+  // Update Twitter URL
+  let twitterUrl = document.querySelector('meta[property="twitter:url"]')
+  if (twitterUrl) {
+    twitterUrl.setAttribute('href', `https://bzoing.ca${to.path}`)
   }
 })
 
