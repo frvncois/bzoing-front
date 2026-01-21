@@ -47,7 +47,7 @@ const router = createRouter({
     },
     {
       path: '/project/:title',
-      name: 'Bzoing - Projet',
+      name: 'Project',
       component: ProjectView,
       props: true,
       meta: {
