@@ -14,7 +14,7 @@ const router = createRouter({
       name: 'Projets',
       component: HomeView,
       meta: {
-        title: 'Projets',
+        title: 'Bzoing - Projets',
         description: 'Studio de création graphique montréalais.'
       }
     },
@@ -23,7 +23,7 @@ const router = createRouter({
       name: 'Archive',
       component: ArchiveView,
       meta: {
-        title: 'Archive',
+        title: 'Bzoing - Archive',
         description: 'Une sélection de beaux moments et de projets à travers les années.'
       }
     },
@@ -32,7 +32,7 @@ const router = createRouter({
       name: 'Recreation',
       component: RecreationView,
       meta: {
-        title: 'Récréation',
+        title: 'Bzoing - Récréation',
         description: 'Expérimentations graphiques en roue libre. :)'
       }
     },
@@ -41,13 +41,13 @@ const router = createRouter({
       name: 'Info',
       component: InfoView,
       meta: {
-        title: 'Info & Contact',
+        title: 'Bzoing - Info & Contact',
         description: 'Découvrez notre équipe et notre approche.'
       }
     },
     {
       path: '/project/:title',
-      name: 'Project',
+      name: 'Bzoing - Projet',
       component: ProjectView,
       props: true,
       meta: {
@@ -56,7 +56,7 @@ const router = createRouter({
     },
     {
       path: '/reel',
-      name: 'Reel',
+      name: 'Bzoing - Reel',
       component: ReelView,
       meta: {
         title: 'Reel',
