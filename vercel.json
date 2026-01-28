@@ -1,4 +1,14 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "bzoing.ca" }
+      ],
+      "destination": "https://www.bzoing.ca/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/signatures/(.*)", "destination": "/signatures/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
