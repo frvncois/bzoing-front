@@ -42,7 +42,7 @@ export const translations = {
       },
       footer: {
         ...sharedFooter,
-        addressLines: ['4641 Av. Papineau', 'Montréal, QC, H2H 1V4'],
+        addressLines: ['1 Rue de Castelnau bur.105', 'Montréal, QC, H2R 2W3'],
       },
     },
     home: {
@@ -59,7 +59,7 @@ export const translations = {
         inquiryTitle: "Demande d'information & emploi",
         socialTitle: 'Social',
         ...sharedContactDetails,
-        addressLines: ['4641 Av. Papineau', 'Montréal, QC H2H 1V4'],
+        addressLines: ['1 Rue de Castelnau bur.105', 'Montréal, QC, H2R 2W3'],
       },
       clients: {
         title: 'Name drop',
@@ -117,7 +117,7 @@ export const translations = {
       },
       footer: {
         ...sharedFooter,
-        addressLines: ['4641 papineau av.', 'Montreal, QC, H2H 1V4'],
+        addressLines: ['1 Rue de Castelnau bur.105', 'Montréal, QC, H2R 2W3'],
       },
     },
     home: {
@@ -134,7 +134,7 @@ export const translations = {
         inquiryTitle: 'Information & jobs',
         socialTitle: 'Social',
         ...sharedContactDetails,
-        addressLines: ['4641 papineau av.', 'Montreal, QC H2H 1V4'],
+        addressLines: ['1 Rue de Castelnau bur.105', 'Montréal, QC, H2R 2W3'],
       },
       clients: {
         title: 'Name drop',
